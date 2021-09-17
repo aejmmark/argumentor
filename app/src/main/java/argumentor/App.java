@@ -1,11 +1,11 @@
 package argumentor;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        Functions func = new Functions();
+        func.processData();
+        String result = func.generate();
+        System.out.println(result);
     }
 }

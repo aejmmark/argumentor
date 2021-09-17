@@ -42,14 +42,15 @@ public class Functions {
                             this.starters.add(curr);
                         }
                     } else {
-                        i = prev.edges.indexOf(curr);
+                        Edge e = new Edge(curr);
+                        i = prev.edges.indexOf(e); // ISSUE
                         if (i > -1) {
                             prev.edges.get(i).addTicket();
                         } else {
                             prev.edges.add(new Edge(curr));
                         }
                     }
-                    if (s.charAt(s.length()-1) == '.' || s.charAt(s.length()-1) == '!' || s.charAt(s.length()-1) == '?') {
+                    if (s.length() > 1 && (s.charAt(s.length()-1) == '.' || s.charAt(s.length()-1) == '!' || s.charAt(s.length()-1) == '?')) {
                         curr.addEndTickets();
                         prev = null;
                     } else {
@@ -59,12 +60,12 @@ public class Functions {
             }
         }
         catch(Exception e) {
-            System.out.println("FILE READ ERROR");
+            System.out.println(e);
         }
     }
 
     public String generate() {
-        int i = this.rng.nextInt(this.starters.size()-1);
+        int i = this.rng.nextInt(this.starters.size()); // index issue?
         Word curr = this.starters.get(i);
         Edge edge = null;
         String sentence = curr.getText();
@@ -75,14 +76,13 @@ public class Functions {
             //temporary solution
             wordLimit--;
             if (wordLimit == 0) {
-                sentence.concat(".");
+                sentence = sentence.replaceAll("[^a-zA-Z ]", "");
+                sentence = (sentence + ".");
                 break;
             }
-
             i = lottery(curr);
             curr = ((Word)((Edge)curr.getEdges().get(i)).getWord());
-            sentence.concat(" ");
-            sentence.concat(curr.getText());
+            sentence = (sentence + " " + curr.getText());
         }
         return sentence;
     }
@@ -91,5 +91,16 @@ public class Functions {
         int sum = w.edgeSum();
         int winner = (this.rng.nextInt(sum));
         return w.checkWinner(winner);
+    }
+
+    public void printAll() {
+        int i = 10;
+        for (Word w : allWords) {
+            System.out.println(w.getText());
+            i--;
+            if (i < 0) {
+                break;
+            }
+        }
     }
 }
