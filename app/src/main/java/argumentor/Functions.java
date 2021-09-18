@@ -5,21 +5,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 
-import argumentor.Word;
-
-
 public class Functions {
     public ArrayList<Word> starters;
     public ArrayList<Word> allWords;
-    public Random rng;
 
-
+    /** Contains the main functions used by the app. Probably will be refactored later.
+    */
     public Functions() {
         this.starters = new ArrayList<Word>();
         this.allWords = new ArrayList<Word>();
-        this.rng = new Random();
     }
 
+    /** Reads lines from determined file and splits them into separate strings. Creates Words from strings.
+     * Adds Word to starters if the previous word ended a sentence.
+     * Adds Word to allWords if not previously encountered. Otherwise adds a ticket to the edge connecting the previous Word to the current Word.
+     * Sets previous Word to null if the current ended a sentence. Otherwise sets previous Word as the current one.
+    */
     public void processData() {
         try {
             File file = new File(System.getProperty("user.dir") + "/data.txt");
@@ -43,15 +44,15 @@ public class Functions {
                         }
                     } else {
                         Edge e = new Edge(curr);
-                        i = prev.edges.indexOf(e); // ISSUE
+                        i = prev.getEdges().indexOf(e);
                         if (i > -1) {
-                            prev.edges.get(i).addTicket();
+                            ((Edge)prev.getEdges().get(i)).addTicket();
                         } else {
-                            prev.edges.add(new Edge(curr));
+                            prev.addEdge(new Edge(curr));
                         }
                     }
                     if (s.length() > 1 && (s.charAt(s.length()-1) == '.' || s.charAt(s.length()-1) == '!' || s.charAt(s.length()-1) == '?')) {
-                        curr.addEndTickets();
+                        curr.addEndTicket();
                         prev = null;
                     } else {
                         prev = curr;
@@ -64,15 +65,18 @@ public class Functions {
         }
     }
 
+
+    /** Generates the sentence. Starts by choosing a word from the starters list.
+     * Chooses next words using the current words lottery() function. Currently ends sentence at 10 words.
+    * @return String representing the formed sentence.
+    */
     public String generate() {
-        int i = this.rng.nextInt(this.starters.size()); // index issue?
+        Random rng = new Random();
+        int i = rng.nextInt(this.starters.size());
         Word curr = this.starters.get(i);
-        Edge edge = null;
         String sentence = curr.getText();
-        boolean generating = true;
         int wordLimit = 10;
-        while(generating) {
-            //check end of sentence first
+        while(true) {
             //temporary solution
             wordLimit--;
             if (wordLimit == 0) {
@@ -80,27 +84,10 @@ public class Functions {
                 sentence = (sentence + ".");
                 break;
             }
-            i = lottery(curr);
+            i = curr.lottery();
             curr = ((Word)((Edge)curr.getEdges().get(i)).getWord());
             sentence = (sentence + " " + curr.getText());
         }
         return sentence;
-    }
-
-    public int lottery(Word w) {
-        int sum = w.edgeSum();
-        int winner = (this.rng.nextInt(sum));
-        return w.checkWinner(winner);
-    }
-
-    public void printAll() {
-        int i = 10;
-        for (Word w : allWords) {
-            System.out.println(w.getText());
-            i--;
-            if (i < 0) {
-                break;
-            }
-        }
     }
 }
