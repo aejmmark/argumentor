@@ -4,21 +4,25 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FunctionsTest {
-    @Test public void testProcessDataAddsToStarters() {
+    @Test public void testProcessDataAddsNodesToRoot() {
         Functions func = new Functions();
-        func.processData();
-        assertTrue("List size should be > 0", func.starters.size() > 0);
-    }
-    
-    @Test public void testProcessDataAddsToAllWords() {
-        Functions func = new Functions();
-        func.processData();
-        assertTrue("List size should be > 0", func.allWords.size() > 0);
+        Tree tree = new Tree();
+        func.processData(tree);
+        assertFalse("Should return false",tree.getRoot().checkEnd(1));
     }
 
-    @Test public void testGenerateReturnsSentence() {
+    @Test public void testGenerateReturnSentence() {
         Functions func = new Functions();
-        func.processData();
-        assertNotNull("Should return string",func.generate());
+        Tree tree = new Tree();
+        func.processData(tree);
+        assertNotNull("Should return String", func.generate(tree));
+    }
+
+    @Test public void testGenerateSentenceAdequateLength() {
+        Functions func = new Functions();
+        Tree tree = new Tree();
+        func.processData(tree);
+        String sentence = func.generate(tree);
+        assertTrue("Should return String", sentence.length() >= 6);
     }
 }
