@@ -3,15 +3,14 @@ package argumentor;
 import java.util.HashMap;
 import java.util.Random;
 
-/** Nodes of the tree. Contains the word used to build sentences and a list of connected edges.
+/** Nodes of the tree.
+ * Contains a string used to build sentences and a list of connected edges.
 */
 public class Node {
-    //public int endTickets;
     public String word;
     public HashMap<Node,Edge> edges;
 
     public Node(String s) {
-        //this.endTickets = 1;
         this.word = s;
         this.edges = new HashMap<Node,Edge>();
     }
@@ -78,19 +77,6 @@ public class Node {
         this.edges.put(node, edge);
     }
 
-    /** Adds one to the endTickets variable.
-    */
-    //public void addEndTicket() {
-    //    this.endTickets++;
-    //}
-
-    /** Returns the amount of ending lottery tickets the Node has. These determine the chance of ending the sentence.
-    * @return int representing the amount of ending tickets.
-    */
-    //public int getEndTickets() {
-    //    return this.endTickets;
-    //}
-
     /** Returns the word contained within the Node.
     * @return String representing the word.
     */
@@ -103,6 +89,13 @@ public class Node {
     */
     public Edge getEdge(Node node) {
         return this.edges.get(node);
+    }
+
+    /** Returns the edges map.
+    * @return HashMap containing all the Node - Edge pairings.
+    */
+    public HashMap<Node,Edge> getEdgeMap() {
+        return this.edges;
     }
 
     /** Determines that two Nodes are equal if they contain the same String in the word variable.

@@ -20,6 +20,13 @@ public class Tree {
         return this.root;
     }
 
+    /** Returns the map containing all String - Node pairings.
+    * @return HashMap containing all Nodes.
+    */
+    public HashMap<String, Node> getAllNodes() {
+        return this.allNodes;
+    }
+
     /** Adds a node if absent to the allNodes map using the given string.
     * @param str String used in the Node constructor.
     * @return Node containing the given String.
@@ -54,7 +61,6 @@ public class Tree {
     */
    public Node checkEnd(String str, Node curr) {
     if (str.length() > 1 && (str.charAt(str.length()-1) == '.' || str.charAt(str.length()-1) == '!' || str.charAt(str.length()-1) == '?')) {
-        //curr.addEndTicket();
         return this.root;
     }
     return curr;
