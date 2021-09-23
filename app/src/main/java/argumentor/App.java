@@ -2,6 +2,9 @@ package argumentor;
 
 public class App {
 
+    /**
+    * Runs the application.
+    */
     public static void main(String[] args) {
         Tree tree = new Tree();
         Functions func = new Functions();
