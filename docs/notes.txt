@@ -61,10 +61,26 @@ Random ideas:
         -use ordered list to determine ticket numbers
         -rng determines winning ticket
 
-{3,4,5,3,2}
+-------------------------------------------------------------------------------------------------------------------
 
-sum = 10
+New plan
 
-10 - 3 = 7
-7 - 4 = 3
-3 - 5 = -2
+Datastructures
+    -Class Tree
+        -HashMap<String, Node>
+    -starters list replaced with "ROOT" node
+    -Edges remain the same
+    -Words -> Nodes
+        -replace ArrayLists with arrays CURRENTLY TRYING OUT HASHMAP
+            -add array extending algorithm
+        -add search function
+
+DataProcess
+    -curr = null
+    -check existence of word with HashMap
+        retrieve if exists else add
+    -the rest should be similar
+    -refactor
+
+Generator
+    -get to this after changing the datastructures
