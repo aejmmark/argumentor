@@ -56,17 +56,17 @@ public class Tree {
     }
 
     /**
-    * Creates an Edge connecting the previous Node to the current Node.
-    * Adds one to the Edges tickets if one already exists.
+    * Creates an edge (Node - int pair) connecting the previous Node to the current Node.
+    * Adds one to the tickets if one already exists.
     * @param prev The previous Node
     * @param curr The current Node
     */
     public void addEdge(final Node prev, final Node curr) {
-        Edge edge = prev.getEdge(curr);
-        if (edge == null) {
-            prev.addEdge(curr, new Edge(curr));
+        Integer tickets = prev.getEdgeMap().get(curr);
+        if (tickets == null) {
+            prev.addEdge(curr);
         } else {
-            edge.addTicket();
+            prev.addTicket(curr);
         }
     }
 

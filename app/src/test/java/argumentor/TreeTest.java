@@ -41,9 +41,9 @@ public class TreeTest {
         Node testPrev = new Node("prev");
         Node testCurr = new Node("curr");
         tree.addEdge(testPrev, testCurr);
-        int tickets = testPrev.getEdge(testCurr).getTickets();
+        int tickets = testPrev.getTickets(testCurr);
         tree.addEdge(testPrev, testCurr);
-        assertTrue("Tickets value should increase", tickets < testPrev.getEdge(testCurr).getTickets());
+        assertTrue("Tickets value should increase", tickets < testPrev.getTickets(testCurr));
     }
 
     @Test public void testCheckEndReturnsRoot() {

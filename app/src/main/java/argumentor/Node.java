@@ -14,11 +14,11 @@ public class Node {
     */
     private String word;
     /**
-    * Map containing Node - Edge pairings.
-    * Keys are the Nodes that Edges are connected to.
-    * Edges are the edges connected to this Node.
+    * Map containing Node - int pairings referred to as edges.
+    * Keys are the Nodes that edges are connected to.
+    * ints represent tickets or the "weight" of the edge.
     */
-    private HashMap<Node, Edge> edges;
+    private HashMap<Node, Integer> edges;
 
     /**
     * Constructor that sets str to word and creates a new HashMap.
@@ -26,12 +26,12 @@ public class Node {
     */
     public Node(final String str) {
         this.word = str;
-        this.edges = new HashMap<Node, Edge>();
+        this.edges = new HashMap<Node, Integer>();
     }
 
     /**
     * Determines the next Node by first calculating
-    * the sum of Edges with edgeSum()
+    * the sum of tickets with edgeSum()
     * and then choosing a random number between that and 0.
     * The result is then given to checkWinner(),
     * that uses it to calculate the winning Node
@@ -48,27 +48,27 @@ public class Node {
      * Calculates the total sum of tickets in the edges map.
      * @return int representing the sum of tickets.
     */
-    public int edgeSum() {
+    public int edgeSum() { //
         int sum = 0;
-        for (Edge edge : this.edges.values()) {
-            sum += edge.getTickets();
+        for (int val : this.edges.values()) {
+            sum += val;
         }
         return sum;
     }
 
     /**
-    * Goes through the map of Edges
+    * Goes through the map of Node - int pairs
     * and calculates wich one contains the winning ticket.
     * @param count int representing the how far the loop will count.
     * @return Node contained in the winning edge. null if something goes wrong.
     */
-    public Node checkWinner(final int count) {
+    public Node checkWinner(final int count) { // FIX THIS
         Node winner = null;
         int winningTicket = count;
-        for (Edge edge : this.edges.values()) {
-            winningTicket -= edge.getTickets();
+        for (Node curr : this.edges.keySet()) {
+            winningTicket -= edges.get(curr);
             if (winningTicket <= 0) {
-                winner = edge.getNode();
+                winner = curr;
                 break;
             }
         }
@@ -78,7 +78,7 @@ public class Node {
     /**
     * Checks whether or not the sentence should end
     * based on the amount of words it currently has.
-    * Returns false if the Node has no Edges connected to it.
+    * Returns false if the Node has no edges connected to it.
     * @param wordCount int representing the amount of words
     currently in the sentence.
     * @return true if the sentence will end, false if not
@@ -99,12 +99,20 @@ public class Node {
     }
 
     /**
-    * Adds and Edge to the edges map.
+    * Adds and edge to the edges map.
     * @param node Node to be added as a key.
-    * @param edge Edge to be added as a value.
     */
-    public void addEdge(final Node node, final Edge edge) {
-        this.edges.put(node, edge);
+    public void addEdge(final Node node) {
+        this.edges.put(node, 1);
+    }
+
+
+    /**
+    * Increases an edges ticket score by 1 in the edges map.
+    * @param node key to the hashmap.
+    */
+    public void addTicket(final Node node) {
+        this.edges.put(node, this.edges.get(node) + 1);
     }
 
     /**
@@ -118,17 +126,17 @@ public class Node {
     /**
     * Returns a value from the edges map based on the given key Node.
     * @param node Node serving as the key to the Map.
-    * @return Edge that is connected to the given Node.
+    * @return int representing the amount of tickets.
     */
-    public Edge getEdge(final Node node) {
+    public int getTickets(final Node node) {
         return this.edges.get(node);
     }
 
     /**
     * Returns the edges map.
-    * @return HashMap containing all the Node - Edge pairings.
+    * @return HashMap containing all the Node - int pairings.
     */
-    public HashMap<Node, Edge> getEdgeMap() {
+    public HashMap<Node, Integer> getEdgeMap() {
         return this.edges;
     }
 

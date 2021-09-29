@@ -9,11 +9,10 @@ public class NodeTest {
         assertTrue("Getter should return the word test", testNode.getWord().equals("test"));
     }
 
-    @Test public void testEdgeGetter() {
+    @Test public void testTicketGetter() {
         Node testNode = new Node("test");
-        Edge edgeTest = new Edge(testNode);
-        testNode.addEdge(testNode, edgeTest);
-        assertNotNull("Getter should return Edge", testNode.getEdge(testNode));
+        testNode.addEdge(testNode);
+        assertNotNull("Getter should return 1", testNode.getTickets(testNode));
     }
 
     @Test public void testEdgeMapGetter() {
@@ -23,20 +22,25 @@ public class NodeTest {
 
     @Test public void testAddEdgeIncreasesValue() {
         Node testNode = new Node("test");
-        Edge edgeTest = new Edge(testNode);
         int edges = testNode.getEdgeMap().size();
-        testNode.addEdge(testNode, edgeTest);
+        testNode.addEdge(testNode);
         assertTrue("List size should increase", testNode.getEdgeMap().size() > edges);
+    }
+
+    @Test public void testAddTicketIncreasesValue() {
+        Node testNode = new Node("test");
+        testNode.addEdge(testNode);
+        int amount = testNode.getTickets(testNode);
+        testNode.addTicket(testNode);
+        assertTrue("Ticket amount should increase", testNode.getTickets(testNode) > amount);
     }
 
     @Test public void testEdgeSumReturnsCorrectValue() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
         Node testNode2 = new Node("test2");
-        Edge edgeTest1 = new Edge(testNode1);
-        Edge edgeTest2 = new Edge(testNode2);
-        testNode.addEdge(testNode1,edgeTest1);
-        testNode.addEdge(testNode2,edgeTest2);
+        testNode.addEdge(testNode1);
+        testNode.addEdge(testNode2);
         assertTrue("Sum should be 2", 2 == testNode.edgeSum());
     }
 
@@ -44,18 +48,15 @@ public class NodeTest {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
         Node testNode2 = new Node("test2");
-        Edge edgeTest1 = new Edge(testNode1);
-        Edge edgeTest2 = new Edge(testNode2);
-        testNode.addEdge(testNode1, edgeTest1);
-        testNode.addEdge(testNode2, edgeTest2);
+        testNode.addEdge(testNode1);
+        testNode.addEdge(testNode2);
         assertTrue("Should return testNode1 or testNode2", testNode.checkWinner(0).equals(testNode1) || testNode.checkWinner(0).equals(testNode2));
     }
 
     @Test public void testLotteryReturnsNode() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
-        Edge edgeTest1 = new Edge(testNode1);
-        testNode.addEdge(testNode1, edgeTest1);
+        testNode.addEdge(testNode1);
         assertTrue("Should return testNode1", testNode.lottery().equals(testNode1));
     }
 
@@ -67,16 +68,14 @@ public class NodeTest {
     @Test public void testCheckEndFalseWhenCountLow() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
-        Edge edgeTest1 = new Edge(testNode1);
-        testNode.addEdge(testNode1, edgeTest1);
+        testNode.addEdge(testNode1);
         assertFalse("Should return false", testNode.checkEnd(1));
     }
 
     @Test public void testCheckEndTrueWhenCountHigh() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
-        Edge edgeTest1 = new Edge(testNode1);
-        testNode.addEdge(testNode1, edgeTest1);
+        testNode.addEdge(testNode1);
         assertTrue("Should return false", testNode.checkEnd(20));
     }
 
