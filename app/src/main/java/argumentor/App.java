@@ -30,7 +30,8 @@ public class App {
         }
         if (!fileName.equals("exit")) {
             System.out.println("Desired amount of words?"
-            + " 0 returns random length. exit leaves the app");
+            + " 0 returns random length.");
+            System.out.println("exit leaves the app");
             while (true) {
                 if (scn.hasNextInt()) {
                     int length = scn.nextInt();
