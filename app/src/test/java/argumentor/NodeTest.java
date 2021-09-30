@@ -62,21 +62,21 @@ public class NodeTest {
 
     @Test public void testCheckEndTrueWhenMapEmpty() {
         Node testNode = new Node("test");
-        assertTrue("Should return false", testNode.checkEnd(5));
+        assertTrue("Should return false", testNode.checkEnd(0, 5));
     }
 
     @Test public void testCheckEndFalseWhenCountLow() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
         testNode.addEdge(testNode1);
-        assertFalse("Should return false", testNode.checkEnd(1));
+        assertFalse("Should return false", testNode.checkEnd(0, 1));
     }
 
     @Test public void testCheckEndTrueWhenCountHigh() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
         testNode.addEdge(testNode1);
-        assertTrue("Should return false", testNode.checkEnd(20));
+        assertTrue("Should return false", testNode.checkEnd(0, 20));
     }
 
     @Test public void testNodesWithSameWordEqual() {
