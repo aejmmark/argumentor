@@ -35,15 +35,6 @@ public class NodeTest {
         assertTrue("Ticket amount should increase", testNode.getTickets(testNode) > amount);
     }
 
-    @Test public void testEdgeSumReturnsCorrectValue() {
-        Node testNode = new Node("test");
-        Node testNode1 = new Node("test1");
-        Node testNode2 = new Node("test2");
-        testNode.addEdge(testNode1);
-        testNode.addEdge(testNode2);
-        assertTrue("Sum should be 2", 2 == testNode.edgeSum());
-    }
-
     @Test public void testCheckWinnerReturnsCorrectWinner() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
