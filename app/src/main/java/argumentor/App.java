@@ -11,15 +11,23 @@ public class App {
         Tree tree = new Tree();
         Functions func = new Functions();
         Scanner scn = new Scanner(System.in);
-        func.processData(tree);
-        System.out.println("Greetings! Type something to gain enlightenment. EXIT leaves the app.");
+        System.out.println("Greetings!"
+        + "Type name of txt file in the app directory."
+        + " (default dataTest.txt)");
+        String fileName = scn.nextLine();
+        func.processData(fileName, tree);
+        System.out.println("Desired amount of words?"
+        + "0 returns random length. exit leaves the app");
         while (true) {
-            String input = scn.nextLine();
-            if (input.equals("EXIT")) {
-                break;
-            } else {
-                String result = func.generate(tree);
+            if (scn.hasNextInt()) {
+                int length = scn.nextInt();
+                String result = func.generate(length, tree);
                 System.out.println(result);
+            } else {
+                String input = scn.nextLine();
+                if (input.equals("exit")) {
+                    break;
+                }
             }
         }
         System.out.println("Farewell");

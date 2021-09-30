@@ -56,7 +56,8 @@ public class Tree {
     }
 
     /**
-    * Creates an edge (Node - int pair) connecting the previous Node to the current Node.
+    * Creates an edge (Node - int pair)
+    * connecting the previous Node to the current Node.
     * Adds one to the tickets if one already exists.
     * @param prev The previous Node
     * @param curr The current Node

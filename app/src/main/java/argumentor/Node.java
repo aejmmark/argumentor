@@ -79,23 +79,29 @@ public class Node {
     * Checks whether or not the sentence should end
     * based on the amount of words it currently has.
     * Returns false if the Node has no edges connected to it.
+    * @param maxWords maximum length of entence determined by user.
     * @param wordCount int representing the amount of words
     currently in the sentence.
     * @return true if the sentence will end, false if not
     */
-    public boolean checkEnd(final int wordCount) {
+    public boolean checkEnd(final int maxWords, final int wordCount) {
         if (this.edges.isEmpty()) {
             return true;
         }
-        Random rng = new Random();
-        int count = wordCount;
-        final int maxCount = 12;
-        final int minCount = 3;
-        count -= rng.nextInt(maxCount) + minCount;
-        if (count > 0) {
-            return true;
+        if (maxWords == 0) {
+            Random rng = new Random();
+            int count = wordCount;
+            final int maxCount = 12;
+            final int minCount = 3;
+            count -= rng.nextInt(maxCount) + minCount;
+            if (count > 0) {
+                return true;
+            }
+            return false;
+        } else {
+            return (maxWords <= wordCount);
         }
-        return false;
+
     }
 
     /**
