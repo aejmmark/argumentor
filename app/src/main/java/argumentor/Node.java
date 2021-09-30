@@ -19,14 +19,20 @@ public class Node {
     * ints represent tickets or the "weight" of the edge.
     */
     private HashMap<Node, Integer> edges;
+    /**
+    * int representing the sum of tickets in the edge map.
+    */
+    private int ticketSum;
 
     /**
-    * Constructor that sets str to word and creates a new HashMap.
+    * Constructor that sets str to word, 0 to ticketSum
+    and creates a new HashMap.
     * @param str String set to word.
     */
     public Node(final String str) {
         this.word = str;
         this.edges = new HashMap<Node, Integer>();
+        this.ticketSum = 0;
     }
 
     /**
@@ -39,21 +45,8 @@ public class Node {
     */
     public Node lottery() {
         Random rng = new Random();
-        int sum = this.edgeSum();
-        int winner = (rng.nextInt(sum));
+        int winner = (rng.nextInt(ticketSum));
         return this.checkWinner(winner);
-    }
-
-    /**
-     * Calculates the total sum of tickets in the edges map.
-     * @return int representing the sum of tickets.
-    */
-    public int edgeSum() { //
-        int sum = 0;
-        for (int val : this.edges.values()) {
-            sum += val;
-        }
-        return sum;
     }
 
     /**
@@ -110,6 +103,7 @@ public class Node {
     */
     public void addEdge(final Node node) {
         this.edges.put(node, 1);
+        this.ticketSum++;
     }
 
 
@@ -119,6 +113,7 @@ public class Node {
     */
     public void addTicket(final Node node) {
         this.edges.put(node, this.edges.get(node) + 1);
+        this.ticketSum++;
     }
 
     /**
