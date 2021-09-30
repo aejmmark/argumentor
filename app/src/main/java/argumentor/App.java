@@ -11,22 +11,36 @@ public class App {
         Tree tree = new Tree();
         Functions func = new Functions();
         Scanner scn = new Scanner(System.in);
-        System.out.println("Greetings!"
+        String fileName = "dataTest.txt";
+        System.out.println("Greetings! "
         + "Type name of txt file in the app directory."
         + " (default dataTest.txt)");
-        String fileName = scn.nextLine();
-        func.processData(fileName, tree);
-        System.out.println("Desired amount of words?"
-        + "0 returns random length. exit leaves the app");
+        System.out.println("exit leaves the app");
         while (true) {
-            if (scn.hasNextInt()) {
-                int length = scn.nextInt();
-                String result = func.generate(length, tree);
-                System.out.println(result);
-            } else {
-                String input = scn.nextLine();
-                if (input.equals("exit")) {
-                    break;
+            fileName = scn.nextLine();
+            if (fileName.equals("exit")) {
+                break;
+            }
+            try {
+                func.processData(fileName, tree);
+                break;
+            } catch (Exception e) {
+                System.out.println("No such file");
+            }
+        }
+        if (!fileName.equals("exit")) {
+            System.out.println("Desired amount of words?"
+            + " 0 returns random length. exit leaves the app");
+            while (true) {
+                if (scn.hasNextInt()) {
+                    int length = scn.nextInt();
+                    String result = func.generate(length, tree);
+                    System.out.println(result);
+                } else {
+                    String input = scn.nextLine();
+                    if (input.equals("exit")) {
+                        break;
+                    }
                 }
             }
         }

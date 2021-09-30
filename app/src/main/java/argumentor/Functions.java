@@ -2,6 +2,7 @@ package argumentor;
 
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
 * Contains the main functions for processing data and generating sentences.
@@ -21,29 +22,25 @@ public class Functions {
     * @param tree The Tree where all the String will be stored.
     * @param fileName name of the txt file.
     */
-    public void processData(final String fileName, final Tree tree) {
-        try {
-            File file = new File(System.getProperty("user.dir")
-            + "/" + fileName);
-            Scanner scn = new Scanner(file);
-            Node prev = tree.getRoot();
-            while (scn.hasNextLine()) {
-                String line = scn.nextLine().toLowerCase();
-                String[] strs = line.split(" ");
-                for (String str : strs) {
-                    if (str.matches("[.?!'äöa-z]+")
-                    && !(str.equals(".") || str.equals("?")
-                    || str.equals("!") || str.equals("'"))) {
-                    Node curr = tree.addNode(str);
-                    tree.addEdge(prev, curr);
-                    prev = tree.checkEnd(str, curr);
-                    }
+    public void processData(final String fileName, final Tree tree) throws FileNotFoundException{
+        File file = new File(System.getProperty("user.dir")
+        + "/" + fileName);
+        Scanner scn = new Scanner(file);
+        Node prev = tree.getRoot();
+        while (scn.hasNextLine()) {
+            String line = scn.nextLine().toLowerCase();
+            String[] strs = line.split(" ");
+            for (String str : strs) {
+                if (str.matches("[.?!'äöa-z]+")
+                && !(str.equals(".") || str.equals("?")
+                || str.equals("!") || str.equals("'"))) {
+                Node curr = tree.addNode(str);
+                tree.addEdge(prev, curr);
+                prev = tree.checkEnd(str, curr);
                 }
             }
-            scn.close();
-        } catch (Exception e) {
-            System.out.println(e);
         }
+        scn.close();
     }
 
 
