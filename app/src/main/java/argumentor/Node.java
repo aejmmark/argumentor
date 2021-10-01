@@ -114,14 +114,14 @@ public class Node {
     */
     public Node addNode(final String str) {
         Node newNode = new Node(str);
-        for (Node keyNode : this.edges.keySet()) {
-            if (newNode.equals(keyNode)) {
-                addTicket(keyNode);
-                return keyNode;
-            }
+        Integer tickets = this.edges.get(newNode);
+        if (tickets == null) {
+            addEdge(newNode);
+            return newNode;
+        } else {
+            addTicket(newNode);
+            return newNode;
         }
-        addEdge(newNode);
-        return newNode;
     }
 
     /**
