@@ -1,6 +1,6 @@
-### Testing document
+## Testing document
 
-## Automatic tests
+### Automatic tests
 
 ![](/docs/images/jacoco.png)
 
@@ -14,7 +14,7 @@ The generated hmtl file can be viewed at:
 
     ./app/build/jacocoHtml/index.html
 
-## Manual tests
+### Manual tests
 
 UI has been tested for correct and incorrect inputs.
 
