@@ -18,11 +18,15 @@ public class Functions {
     /**
     * Scans through the data.txt file and
     * adds all the separate words to the given Tree.
-    * Makes use of the Trees addNode(), addEdge() and checkEnd() methods.
+    * Makes use of the addNode(), addEdge() and checkEnd() methods.
+    * alt False uses the original tree based on the allNodes map.
+    * alt True uses the alternative structure closer to a trie.
     * @param tree The Tree where all the String will be stored.
     * @param fileName name of the txt file.
+    * @param alt boolean determining the storage method
     */
-    public void processData(final String fileName, final Tree tree) throws FileNotFoundException{
+    public void processData(final boolean alt, final String fileName, final Tree tree) throws FileNotFoundException{
+        long startTime = System.nanoTime();
         File file = new File(System.getProperty("user.dir")
         + "/" + fileName);
         Scanner scn = new Scanner(file);
@@ -31,16 +35,23 @@ public class Functions {
             String line = scn.nextLine().toLowerCase();
             String[] strs = line.split(" ");
             for (String str : strs) {
-                if (str.matches("[.?!'äöa-z]+")
+                if (str.matches("[-.?!'äöa-z]+")
                 && !(str.equals(".") || str.equals("?")
                 || str.equals("!") || str.equals("'"))) {
-                Node curr = tree.addNode(str);
-                tree.addEdge(prev, curr);
-                prev = tree.checkEnd(str, curr);
+                    Node curr;
+                    if (alt) {
+                        curr = prev.addNode(str); 
+                    } else {
+                        curr = tree.addNode(str);
+                        tree.addEdge(prev, curr);
+                    }
+                    prev = tree.checkEnd(str, curr);
                 }
             }
         }
         scn.close();
+        System.out.println("Processing the file took "
+        + ((System.nanoTime() - startTime) / 1000000000.0) + " seconds");
     }
 
 
@@ -52,6 +63,7 @@ public class Functions {
     * @return String representing the formed sentence.
     */
     public String generate(final int length, final Tree tree) {
+        long startTime = System.nanoTime();
         Node curr = tree.getRoot().lottery();
         String sentence = curr.getWord();
         sentence = sentence.substring(0, 1).toUpperCase()
@@ -70,6 +82,8 @@ public class Functions {
             sentence = (sentence + " " + curr.getWord());
             wordCount++;
         }
+        System.out.println("Generating the sentence took "
+        + ((System.nanoTime() - startTime) / 1000000000.0) + " seconds");
         return sentence;
     }
 }

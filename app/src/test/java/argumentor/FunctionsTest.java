@@ -8,7 +8,7 @@ public class FunctionsTest {
         Functions func = new Functions();
         Tree tree = new Tree();
         try {
-            func.processData("dataTest.txt", tree);
+            func.processData(true, "dataTest.txt", tree);
         } catch (Exception e) {
             System.out.println(e);
         }assertFalse("Should return false",tree.getRoot().checkEnd(0, 1));
@@ -18,7 +18,7 @@ public class FunctionsTest {
         Functions func = new Functions();
         Tree tree = new Tree();
         try {
-            func.processData("dataTest.txt", tree);
+            func.processData(true, "dataTest.txt", tree);
         } catch (Exception e) {
             System.out.println(e);
         }assertNotNull("Should return String", func.generate(0, tree));
@@ -28,7 +28,7 @@ public class FunctionsTest {
         Functions func = new Functions();
         Tree tree = new Tree();
         try {
-            func.processData("dataTest.txt", tree);
+            func.processData(true, "dataTest.txt", tree);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -106,6 +106,23 @@ public class Node {
         this.ticketSum++;
     }
 
+    /**
+    * Connects given Node to this one.
+    * Increases tickets if already present.
+    * Used in alternative version of app.
+    * @param str String used in creating the new Node.
+    */
+    public Node addNode(final String str) {
+        Node newNode = new Node(str);
+        for (Node keyNode : this.edges.keySet()) {
+            if (newNode.equals(keyNode)) {
+                addTicket(keyNode);
+                return keyNode;
+            }
+        }
+        addEdge(newNode);
+        return newNode;
+    }
 
     /**
     * Increases an edges ticket score by 1 in the edges map.
