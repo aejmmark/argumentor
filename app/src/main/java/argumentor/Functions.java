@@ -35,7 +35,7 @@ public class Functions {
             String line = scn.nextLine().toLowerCase();
             String[] strs = line.split(" ");
             for (String str : strs) {
-                if (str.matches("[-.?!'äöa-z]+")
+                if (str.matches("[-,.?!'äöa-z]+")
                 && !(str.equals(".") || str.equals("?")
                 || str.equals("!") || str.equals("'"))) {
                     Node curr;
