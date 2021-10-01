@@ -1,8 +1,10 @@
 ### Testing document
 
+## Automatic tests
+
 ![](/docs/images/jacoco.png)
 
-At the time most of the testing has been done using automatic JUnit tests.
+All files aside from the App.java file have automated JUnit tests.
 
 The tests can be run with:
 
@@ -12,5 +14,12 @@ The generated hmtl file can be viewed at:
 
     ./app/build/jacocoHtml/index.html
 
-In addition to that I have done several manual tests to make sure that the generated sentences are notably different than those found in the data.
-The user interface will also be tested manually when it is complete.
+## Manual tests
+
+UI has been tested for correct and incorrect inputs.
+
+Similarity of the generated sentences.
+* The original version produces notably different sentences.
+* The alternative version produces copies of existing sentences
+
+Speed of data processing and sentence generation was tested using a very large text file. Both versions of data processing had similar results with the original version being slightly faster. Generation had no notable difference.
