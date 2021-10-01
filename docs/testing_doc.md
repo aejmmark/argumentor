@@ -22,4 +22,4 @@ Similarity of the generated sentences.
 * The original version produces notably different sentences.
 * The alternative version produces copies of existing sentences.
 
-Speed of data processing and sentence generation was tested using a very large text file. Both versions of data processing had similar results with the original version being slightly faster. Generation had no notable difference.
+Speed of data processing and sentence generation was tested using a very large text file. Both versions had similar results with the alternative version being slightly faster in both cases.
