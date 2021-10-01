@@ -11,7 +11,7 @@ public class App {
         Tree tree = new Tree();
         Functions func = new Functions();
         Scanner scn = new Scanner(System.in);
-        String fileName = "dataTest.txt";
+        String fileName = "data.txt";
         boolean alt = false;
         System.out.println("Greetings! "
         + "type name of txt file in the app directory."

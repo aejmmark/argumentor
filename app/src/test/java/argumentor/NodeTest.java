@@ -35,6 +35,21 @@ public class NodeTest {
         assertTrue("Ticket amount should increase", testNode.getTickets(testNode) > amount);
     }
 
+    @Test public void testAddNodeIncreasesMapSize() {
+        Node testNode = new Node("test1");
+        int amount = testNode.getEdgeMap().size();
+        testNode.addNode("test2");
+        assertTrue("Maps size should increase", testNode.getEdgeMap().size() > amount);
+    }
+
+    @Test public void testAddNodeWontAddDuplicate() {
+        Node testNode = new Node("test1");
+        testNode.addNode("test2");
+        int amount = testNode.getEdgeMap().size();
+        testNode.addNode("test2");
+        assertTrue("Maps size should not increase", testNode.getEdgeMap().size() == amount);
+    }
+
     @Test public void testCheckWinnerReturnsCorrectWinner() {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
@@ -53,7 +68,7 @@ public class NodeTest {
 
     @Test public void testCheckEndTrueWhenMapEmpty() {
         Node testNode = new Node("test");
-        assertTrue("Should return false", testNode.checkEnd(0, 5));
+        assertTrue("Should return true", testNode.checkEnd(0, 5));
     }
 
     @Test public void testCheckEndFalseWhenCountLow() {
@@ -67,7 +82,21 @@ public class NodeTest {
         Node testNode = new Node("test");
         Node testNode1 = new Node("test1");
         testNode.addEdge(testNode1);
-        assertTrue("Should return false", testNode.checkEnd(0, 20));
+        assertTrue("Should return true", testNode.checkEnd(0, 20));
+    }
+
+    @Test public void testCheckEndFalseWhenCountBelowMax() {
+        Node testNode = new Node("test");
+        Node testNode1 = new Node("test1");
+        testNode.addEdge(testNode1);
+        assertFalse("Should return false", testNode.checkEnd(10, 1));
+    }
+
+    @Test public void testCheckEndTrueWhenCountAboveMax() {
+        Node testNode = new Node("test");
+        Node testNode1 = new Node("test1");
+        testNode.addEdge(testNode1);
+        assertTrue("Should return true", testNode.checkEnd(10, 11));
     }
 
     @Test public void testNodesWithSameWordEqual() {
@@ -79,5 +108,17 @@ public class NodeTest {
     @Test public void testNodeNotEqualToNull() {
         Node testNode = new Node("test");
         assertFalse("Nodes should not be equal to null", testNode.equals(null));
+    }
+
+    @Test public void testNodeNotEqualToOtherObj() {
+        Node testNode = new Node("test");
+        Integer one = 1;
+        assertFalse("Should not be equal", testNode.equals(one));
+    }
+
+    @Test public void testNodeNotEqualIfOtherIsNull() {
+        Node testNode1 = new Node(null);
+        Node testNode2 = new Node("test");
+        assertFalse("Should not be equal", testNode1.equals(testNode2));
     }
 }
