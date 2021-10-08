@@ -84,11 +84,8 @@ public class Node {
     public boolean checkEnd(final int maxWords, final int wordCount) {
         if (maxWords == 0) {
             Random rng = new Random();
-            int count = wordCount;
-            final int maxCount = 12;
-            final int minCount = 3;
-            count -= rng.nextInt(maxCount) + minCount;
-            if (count > 0) {
+            int count = rng.nextInt(10);
+            if (count == 1) {
                 return true;
             }
             return false;
