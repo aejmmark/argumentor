@@ -1,12 +1,19 @@
 package argumentor;
 
 import org.junit.Test;
+import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class FunctionsTest {
+    private Functions func;
+    private Tree tree;
+
+    @Before public void setUp() {
+    	func = new Functions();
+        tree = new Tree();
+    }
+
     @Test public void testOGProcessDataAddsNodesToRoot() {
-        Functions func = new Functions();
-        Tree tree = new Tree();
         try {
             func.processData(false, "data.txt", tree);
         } catch (Exception e) {
@@ -16,8 +23,6 @@ public class FunctionsTest {
     }
 
     @Test public void testAltProcessDataAddsNodesToRoot() {
-        Functions func = new Functions();
-        Tree tree = new Tree();
         try {
             func.processData(true, "data.txt", tree);
         } catch (Exception e) {
@@ -27,8 +32,6 @@ public class FunctionsTest {
     }
 
     @Test public void testGenerateReturnSentence() {
-        Functions func = new Functions();
-        Tree tree = new Tree();
         try {
             func.processData(true, "data.txt", tree);
         } catch (Exception e) {
@@ -38,8 +41,6 @@ public class FunctionsTest {
     }
 
     @Test public void testGenerateRandomLengthSentenceAdequateLength() {
-        Functions func = new Functions();
-        Tree tree = new Tree();
         try {
             func.processData(true, "data.txt", tree);
         } catch (Exception e) {
@@ -50,8 +51,6 @@ public class FunctionsTest {
     }
 
     @Test public void testGeneratedSentenceBelowGivenLength() {
-        Functions func = new Functions();
-        Tree tree = new Tree();
         try {
             func.processData(true, "data.txt", tree);
         } catch (Exception e) {
