@@ -12,7 +12,12 @@ public class NodeTest {
     @Test public void testTicketGetter() {
         Node testNode = new Node("test");
         testNode.addEdge(testNode);
-        assertNotNull("Getter should return 1", testNode.getTickets(testNode));
+        assertTrue("Getter should return 1", testNode.getTickets(testNode) == 1);
+    }
+
+    @Test public void testTicketSum() {
+        Node testNode = new Node("test");
+        assertTrue("Getter should return 0", testNode.getTicketSum() == 0);
     }
 
     @Test public void testEdgeMapGetter() {
