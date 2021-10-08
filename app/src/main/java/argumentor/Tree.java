@@ -59,10 +59,14 @@ public class Tree {
     * Creates an edge (Node - int pair)
     * connecting the previous Node to the current Node.
     * Adds one to the tickets if one already exists.
+    * Returns if Nodes have the same word.
     * @param prev The previous Node
     * @param curr The current Node
     */
     public void addEdge(final Node prev, final Node curr) {
+        if (prev.equals(curr)) {
+            return;
+        }
         Integer tickets = prev.getEdgeMap().get(curr);
         if (tickets == null) {
             prev.addEdge(curr);
