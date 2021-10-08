@@ -64,7 +64,8 @@ public class Functions {
     */
     public String generate(final int length, final Tree tree) {
         long startTime = System.nanoTime();
-        Node curr = tree.getRoot().lottery();
+        Node root = tree.getRoot();
+        Node curr = root.lottery();
         String sentence = curr.getWord();
         sentence = sentence.substring(0, 1).toUpperCase()
         + sentence.substring(1).toLowerCase();
@@ -72,14 +73,11 @@ public class Functions {
         int wordCount = 1;
         while (true) {
             if (curr.checkEnd(maxWords, wordCount)) {
-                char end = sentence.charAt(sentence.length() - 1);
-                if (!(end == '.' || end == '?' || end == '!')) {
-                    sentence = (sentence + ".");
-                }
+                sentence = checkPunctuation(sentence);
                 break;
             }
             if (curr.getTicketSum() == 0) {
-                curr = tree.getRoot().lottery();
+                curr = root.lottery();
             } else {
                 curr = curr.lottery();
             }
@@ -88,6 +86,23 @@ public class Functions {
         }
         System.out.println("Generating the sentence took "
         + ((System.nanoTime() - startTime) / 1000000000.0) + " seconds");
+        return sentence;
+    }
+
+    /**
+    * Ensures that the generated sentence ends correctly.
+    * @param str sentence to be checked.
+    * @return The complete sentence.
+    */
+    public String checkPunctuation(final String str) {
+        String sentence = str;
+        char end = sentence.charAt(sentence.length() - 1);
+        if (!(end == '.' || end == '?' || end == '!')) {
+            if (end == ',') {
+                sentence = sentence.substring(0, sentence.length());
+            }
+            sentence = (sentence + ".");
+        }
         return sentence;
     }
 }
