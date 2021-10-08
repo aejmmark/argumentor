@@ -8,13 +8,6 @@ import java.io.FileNotFoundException;
 * Contains the main functions for processing data and generating sentences.
 */
 public class Functions {
-
-    /**
-    * Constructor.
-    */
-    public Functions() {
-    }
-
     /**
     * Scans through the data.txt file and
     * adds all the separate words to the given Tree.
@@ -26,7 +19,6 @@ public class Functions {
     * @param alt boolean determining the storage method
     */
     public void processData(final boolean alt, final String fileName, final Tree tree) throws FileNotFoundException{
-        long startTime = System.nanoTime();
         File file = new File(System.getProperty("user.dir")
         + "/" + fileName);
         Scanner scn = new Scanner(file);
@@ -50,8 +42,6 @@ public class Functions {
             }
         }
         scn.close();
-        System.out.println("Processing the file took "
-        + ((System.nanoTime() - startTime) / 1000000000.0) + " seconds");
     }
 
 
@@ -63,7 +53,6 @@ public class Functions {
     * @return String representing the formed sentence.
     */
     public String generate(final int length, final Tree tree) {
-        long startTime = System.nanoTime();
         Node root = tree.getRoot();
         Node curr = root.lottery();
         String sentence = curr.getWord();
@@ -84,8 +73,6 @@ public class Functions {
             sentence = (sentence + " " + curr.getWord());
             wordCount++;
         }
-        System.out.println("Generating the sentence took "
-        + ((System.nanoTime() - startTime) / 1000000000.0) + " seconds");
         return sentence;
     }
 
@@ -99,7 +86,7 @@ public class Functions {
         char end = sentence.charAt(sentence.length() - 1);
         if (!(end == '.' || end == '?' || end == '!')) {
             if (end == ',') {
-                sentence = sentence.substring(0, sentence.length());
+                sentence = sentence.substring(0, sentence.length() - 1);
             }
             sentence = (sentence + ".");
         }
