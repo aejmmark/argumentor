@@ -78,7 +78,11 @@ public class Functions {
                 }
                 break;
             }
-            curr = curr.lottery();
+            if (curr.getTicketSum() == 0) {
+                curr = tree.getRoot().lottery();
+            } else {
+                curr = curr.lottery();
+            }
             sentence = (sentence + " " + curr.getWord());
             wordCount++;
         }

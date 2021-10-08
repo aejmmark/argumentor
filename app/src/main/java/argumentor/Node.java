@@ -42,8 +42,12 @@ public class Node {
     * The result is then given to checkWinner(),
     * that uses it to calculate the winning Node
     * @return Node that won the lottery provided by checkWinner().
+    * null if ticketSum is 0.
     */
     public Node lottery() {
+        if (ticketSum == 0) {
+            return null;
+        }
         Random rng = new Random();
         int winner = (rng.nextInt(ticketSum));
         return this.checkWinner(winner);
@@ -71,16 +75,13 @@ public class Node {
     /**
     * Checks whether or not the sentence should end
     * based on the amount of words it currently has.
-    * Returns false if the Node has no edges connected to it.
     * @param maxWords maximum length of entence determined by user.
+    * 0 leads to a randomized solution.
     * @param wordCount int representing the amount of words
     currently in the sentence.
     * @return true if the sentence will end, false if not
     */
     public boolean checkEnd(final int maxWords, final int wordCount) {
-        if (this.edges.isEmpty()) {
-            return true;
-        }
         if (maxWords == 0) {
             Random rng = new Random();
             int count = wordCount;
@@ -156,6 +157,14 @@ public class Node {
     */
     public HashMap<Node, Integer> getEdgeMap() {
         return this.edges;
+    }
+
+    /**
+    * Returns the value of the ticketSum variable.
+    * @return int representing the total of tickets in the edges map.
+    */
+    public int getTicketSum() {
+        return this.ticketSum;
     }
 
     /**
