@@ -84,7 +84,8 @@ public class Node {
     public boolean checkEnd(final int maxWords, final int wordCount) {
         if (maxWords == 0) {
             Random rng = new Random();
-            int count = rng.nextInt(10);
+            final int chance = 10;
+            int count = rng.nextInt(chance);
             if (count == 1) {
                 return true;
             }
@@ -109,6 +110,7 @@ public class Node {
     * Increases tickets if already present.
     * Used in alternative version of app.
     * @param str String used in creating the new Node.
+    * @return returns the Node that was connected to this one.
     */
     public Node addNode(final String str) {
         Node newNode = new Node(str);

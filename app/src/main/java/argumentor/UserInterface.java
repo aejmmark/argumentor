@@ -23,14 +23,14 @@ public class UserInterface {
     private Functions func;
 
     /**
-    * Constructor
+    * Constructor.
     */
     public UserInterface() {
         this.scn = new Scanner(System.in);
         this.tree = new Tree();
         this.func = new Functions();
     }
-    
+
     /**
     * Main interface that opens when the app is run.
     */
@@ -75,7 +75,7 @@ public class UserInterface {
     }
 
     /**
-    * Sentence generation loop
+    * Sentence generation loop.
     */
     public void sentenceGeneration() {
         System.out.println("enter desired amount of words");
@@ -100,31 +100,35 @@ public class UserInterface {
     * Completes each one 100 times and chooses the median value.
     * @param alt determines wich version of the tree is used for tests.
     */
-    public void performanceTest(boolean alt) {
+    public void performanceTest(final boolean alt) {
         long startTime;
+        final int tests = 100;
+        final int sentenceLength = 1000;
+        final double timeConverter = 1000000000.0;
         ArrayList<Double> results = new ArrayList<>();
         try {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < tests; i++) {
                 this.tree = new Tree();
                 startTime = System.nanoTime();
                 this.func.processData(alt, "data.txt", this.tree);
-                results.add((System.nanoTime() - startTime) / 1000000000.0);
+                results.add((System.nanoTime() - startTime) / timeConverter);
             }
         } catch (Exception e) {
             System.out.println("unexpected error");
         }
         Collections.sort(results);
         System.out.println("file processing took "
-        + results.get(50) + " seconds");
+        + results.get(tests / 2) + " seconds");
 
         results = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < tests; i++) {
             startTime = System.nanoTime();
-            this.func.generate(1000, this.tree);
-            results.add((System.nanoTime() - startTime) / 1000000000.0);
+            this.func.generate(sentenceLength, this.tree);
+            results.add((System.nanoTime() - startTime) / timeConverter);
         }
         Collections.sort(results);
-        System.out.println("generating 1000 word sentence took "
-            + results.get(50) + " seconds");
+        System.out.println("generating " + sentenceLength
+        + " word sentence took "
+        + results.get(tests / 2) + " seconds");
     }
 }

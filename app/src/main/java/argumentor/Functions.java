@@ -18,7 +18,9 @@ public class Functions {
     * @param fileName name of the txt file.
     * @param alt boolean determining the storage method
     */
-    public void processData(final boolean alt, final String fileName, final Tree tree) throws FileNotFoundException{
+    public void
+    processData(final boolean alt, final String fileName, final Tree tree)
+    throws FileNotFoundException {
         File file = new File(System.getProperty("user.dir")
         + "/" + fileName);
         Scanner scn = new Scanner(file);
@@ -32,7 +34,7 @@ public class Functions {
                 || str.equals("!") || str.equals("'"))) {
                     Node curr;
                     if (alt) {
-                        curr = prev.addNode(str); 
+                        curr = prev.addNode(str);
                     } else {
                         curr = tree.addNode(str);
                         tree.addEdge(prev, curr);
