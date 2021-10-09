@@ -99,7 +99,7 @@ public class UserInterface {
 
     /**
     * Runs performance tests for the main functions.
-    * Completes each one 100 times and chooses the median value.
+    * Completes each one 500 times and chooses the median value.
     * @param alt determines wich version of the tree is used for tests.
     */
     public void performanceTest(final boolean alt) {
