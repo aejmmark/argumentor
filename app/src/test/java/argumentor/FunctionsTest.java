@@ -59,4 +59,29 @@ public class FunctionsTest {
     @Test public void testCheckEndTrueWhenCountAboveMax() {
         assertTrue("Should return true", this.func.checkEnd(10, 11));
     }
+
+    @Test public void checkPunctuationDeletesComma() {
+        String str = "test,";
+        assertTrue("Length should be equal", str.length() == this.func.checkPunctuation(str).length());
+    }
+
+    @Test public void checkPunctuationAddsDot() {
+        String str = "test";
+        assertTrue("Length should be greater", str.length() < this.func.checkPunctuation(str).length());
+    }
+
+    @Test public void checkPunctuationIgnoresDot() {
+        String str = "test.";
+        assertTrue("Strings should be equal", str.equals(this.func.checkPunctuation(str)));
+    }
+
+    @Test public void checkPunctuationIgnoresQmark() {
+        String str = "test?";
+        assertTrue("Strings should be equal", str.equals(this.func.checkPunctuation(str)));
+    }
+
+    @Test public void checkPunctuationIgnoresExmark() {
+        String str = "test!";
+        assertTrue("Strings should be equal", str.equals(this.func.checkPunctuation(str)));
+    }
 }
