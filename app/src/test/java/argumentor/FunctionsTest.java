@@ -40,16 +40,6 @@ public class FunctionsTest {
         assertNotNull("Should return String", this.func.generate(0, this.tree));
     }
 
-    @Test public void testGenerateRandomLengthSentenceAdequateLength() {
-        try {
-            this.func.processData(true, "data.txt", this.tree);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        String sentence = this.func.generate(0, this.tree);
-        assertTrue("Should return String", sentence.length() >= 6);
-    }
-
     @Test public void testGeneratedSentenceBelowGivenLength() {
         try {
             this.func.processData(true, "data.txt", this.tree);
