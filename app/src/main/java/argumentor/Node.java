@@ -42,12 +42,8 @@ public class Node {
     * The result is then given to checkWinner(),
     * that uses it to calculate the winning Node
     * @return Node that won the lottery provided by checkWinner().
-    * null if ticketSum is 0.
     */
     public Node lottery() {
-        if (ticketSum == 0) {
-            return null;
-        }
         Random rng = new Random();
         int winner = (rng.nextInt(ticketSum));
         return this.checkWinner(winner);
