@@ -55,6 +55,7 @@ public class UserInterface {
             if (input.equals("3")) {
                 System.out.println("testing default version");
                 performanceTest(false);
+                System.out.println("");
                 System.out.println("testing alternative version");
                 performanceTest(true);
                 break;
@@ -70,6 +71,7 @@ public class UserInterface {
                 }
             }
         }
+        System.out.println("");
         System.out.println("bye");
         this.scn.close();
     }
@@ -102,8 +104,8 @@ public class UserInterface {
     */
     public void performanceTest(final boolean alt) {
         long startTime;
-        final int tests = 100;
-        final int sentenceLength = 1000;
+        final int tests = 500;
+        final int[] sentenceLength = {10, 100, 1000, 10000};
         final double timeConverter = 1000000000.0;
         ArrayList<Double> results = new ArrayList<>();
         try {
@@ -120,15 +122,17 @@ public class UserInterface {
         System.out.println("file processing took "
         + results.get(tests / 2) + " seconds");
 
-        results = new ArrayList<>();
-        for (int i = 0; i < tests; i++) {
-            startTime = System.nanoTime();
-            this.func.generate(sentenceLength, this.tree);
-            results.add((System.nanoTime() - startTime) / timeConverter);
+        for (int i = 0; i < sentenceLength.length; i++) {
+            results = new ArrayList<>();
+            for (int j = 0; j < tests; j++) {
+                startTime = System.nanoTime();
+                this.func.generate(sentenceLength[i], this.tree);
+                results.add((System.nanoTime() - startTime) / timeConverter);
+            }
+            Collections.sort(results);
+            System.out.println("generating " + sentenceLength[i]
+            + " word sentence took "
+            + results.get(tests / 2) + " seconds");
         }
-        Collections.sort(results);
-        System.out.println("generating " + sentenceLength
-        + " word sentence took "
-        + results.get(tests / 2) + " seconds");
     }
 }
