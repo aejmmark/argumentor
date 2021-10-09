@@ -6,3 +6,5 @@ I removed all the ui elements from the App class and moved them to their own Use
 
 I updated the testing document with the new performance test data. I could probably add some tests checking if the generated sentences are present in the sample data or not depending on wich version is being run. Irregularities in the sample data may cause issues but maybe it is worth trying.
 The implementation document was updated with space and time complexities for the main functions as well as some graphs to better help understand the differences between the two versions.
+
+Time spent 10h
