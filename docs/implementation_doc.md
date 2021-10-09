@@ -10,9 +10,11 @@ The nodes in the trie contain hashmaps with node-int pairings representing edges
 Graphs showing how the two versions react to the input "beans are awesome. I enjoy beans immensely. beans are horrible."
 
 Default
+
 ![](/docs/images/default.png)
 
 Alternative
+
 ![](/docs/images/alt.png)
 
 The generate functions starts from the root and chooses the next node by utilizing the root node's lottery method. It chooses a random number between 0 and the ticketSum variable and chooses the matching node by going through the edges hashmap. The winning node is then placed as the previous node and the loop continues until the sentence stops randomly or the given maximum word count is reached. After that the function returns the string containing all the words collected from the nodes.
