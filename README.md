@@ -21,3 +21,4 @@ A random sentence generator.
 * [Week 2](https://github.com/aejmmark/argumentor/blob/main/docs/week_report2.md)
 * [Week 3](https://github.com/aejmmark/argumentor/blob/main/docs/week_report3.md)
 * [Week 4](https://github.com/aejmmark/argumentor/blob/main/docs/week_report4.md)
+* [Week 5](https://github.com/aejmmark/argumentor/blob/main/docs/week_report5.md)
