@@ -73,30 +73,6 @@ public class Node {
     }
 
     /**
-    * Checks whether or not the sentence should end
-    * based on the amount of words it currently has.
-    * @param maxWords maximum length of entence determined by user.
-    * 0 leads to a randomized solution.
-    * @param wordCount int representing the amount of words
-    currently in the sentence.
-    * @return true if the sentence will end, false if not
-    */
-    public boolean checkEnd(final int maxWords, final int wordCount) {
-        if (maxWords == 0) {
-            Random rng = new Random();
-            final int chance = 10;
-            int count = rng.nextInt(chance);
-            if (count == 1) {
-                return true;
-            }
-            return false;
-        } else {
-            return (maxWords <= wordCount);
-        }
-
-    }
-
-    /**
     * Adds and edge to the edges map.
     * @param node Node to be added as a key.
     */

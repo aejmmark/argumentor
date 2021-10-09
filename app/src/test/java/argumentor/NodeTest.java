@@ -68,18 +68,6 @@ public class NodeTest {
         assertTrue("Should return testNode2", testNode.lottery().equals(testNode2));
     }
 
-    @Test public void testCheckEndFalseWhenCountBelowMax() {
-        Node testNode2 = new Node("test2");
-        testNode.addEdge(testNode2);
-        assertFalse("Should return false", testNode.checkEnd(10, 1));
-    }
-
-    @Test public void testCheckEndTrueWhenCountAboveMax() {
-        Node testNode2 = new Node("test2");
-        testNode.addEdge(testNode2);
-        assertTrue("Should return true", testNode.checkEnd(10, 11));
-    }
-
     @Test public void testNodesWithSameWordEqual() {
         Node testNode2 = new Node("test");
         assertTrue("Wors with the same word should be equal", testNode.equals(testNode2));
