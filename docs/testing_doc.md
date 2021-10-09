@@ -4,7 +4,7 @@
 
 ![](/docs/images/jacoco.png)
 
-All files aside from the App.java file have automated JUnit tests.
+All classes aside from App and UserInterface have automated JUnit tests.
 
 The tests can be run with:
 
@@ -19,7 +19,9 @@ The generated hmtl file can be viewed at:
 UI has been tested for correct and incorrect inputs.
 
 Similarity of the generated sentences.
-* The original version produces notably different sentences.
-* The alternative version produces copies of existing sentences.
+* The default version produces notably different sentences.
+* The alternative version replicates existing sentences.
 
-Speed of data processing and sentence generation was tested using a very large text file. Both versions had similar results with the alternative version being slightly faster in both cases.
+Speed of data processing and sentence generation can be tested from the user interface. These tests use the data.txt file.
+
+![](/docs/images/performance.png)
