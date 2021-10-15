@@ -12,10 +12,9 @@ public class Functions {
     /**
     * Scans through the data.txt file and
     * adds all the separate words to the given Tree.
-    * Makes use of the addNode(), addEdge() and checkEnd() methods.
+    * Makes use of the addNode() and checkEnd() methods.
     * alt False uses the original tree based on the allNodes map.
     * alt True uses the alternative structure closer to a trie.
-    * This version uses the addNodeAlt function instead.
     * @param tree The Tree where all the String will be stored.
     * @param fileName name of the txt file.
     * @param alt boolean determining the storage method
@@ -64,10 +63,9 @@ public class Functions {
                 break;
             }
             if (curr.getTicketSum() == 0) {
-                curr = root.lottery();
-            } else {
-                curr = curr.lottery();
+                curr = root;
             }
+            curr = curr.lottery();
             sentence = (sentence + " " + curr.getWord());
             wordCount++;
         }
