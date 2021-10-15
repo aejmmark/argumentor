@@ -8,7 +8,7 @@ import java.util.HashMap;
 */
 public class Tree {
     /**
-    * HashMap containing all Nodes.
+    * Hashmap containing all Nodes.
     * Keys are the Strings contained in the Nodes
     */
     private HashMap<String, Node> allNodes;
@@ -34,11 +34,35 @@ public class Tree {
     }
 
     /**
-    * Returns the map containing all String - Node pairings.
-    * @return HashMap containing all Nodes.
+    * Returns the map containing all String-Node pairings.
+    * @return Hashmap containing all Nodes.
     */
     public HashMap<String, Node> getAllNodes() {
         return this.allNodes;
+    }
+
+    /**
+    * Searches for Node with given string and
+    * creates new one if not present.
+    * Connects it with the given Node prev.
+    * Increases tickets if already present.
+    * Does not add to allNodes if alt is true.
+    * @param str String used in creating the new Node.
+    * @return returns the Node that was connected to this one.
+    */
+    public Node addNode(final String str, final Node prev, final boolean alt) {
+        Node newNode = new Node(str);
+        if (!alt) {
+            newNode = addToAllNodes(str);
+        }
+        Integer tickets = prev.getTickets(newNode);
+        if (tickets == null) {
+            prev.addEdge(newNode);
+            return newNode;
+        } else {
+            prev.addTicket(newNode);
+            return newNode;
+        }
     }
 
     /**
@@ -46,33 +70,13 @@ public class Tree {
     * @param str String used in the Node constructor.
     * @return Node containing the given String.
     */
-    public Node addNode(final String str) {
-        Node node = this.allNodes.get(str);
-        if (node == null) {
-            node = new Node(str);
-            this.allNodes.put(str, node);
+    public Node addToAllNodes(final String str) {
+        Node newNode = this.allNodes.get(str);
+        if (newNode == null) {
+            newNode = new Node(str);
+            this.allNodes.put(str, newNode);
         }
-        return node;
-    }
-
-    /**
-    * Creates an edge (Node - int pair)
-    * connecting the previous Node to the current Node.
-    * Adds one to the tickets if one already exists.
-    * Returns if Nodes have the same word.
-    * @param prev The previous Node
-    * @param curr The current Node
-    */
-    public void addEdge(final Node prev, final Node curr) {
-        if (prev.equals(curr)) {
-            return;
-        }
-        Integer tickets = prev.getEdgeMap().get(curr);
-        if (tickets == null) {
-            prev.addEdge(curr);
-        } else {
-            prev.addTicket(curr);
-        }
+        return newNode;
     }
 
     /**

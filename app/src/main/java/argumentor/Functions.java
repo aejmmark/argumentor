@@ -15,6 +15,7 @@ public class Functions {
     * Makes use of the addNode(), addEdge() and checkEnd() methods.
     * alt False uses the original tree based on the allNodes map.
     * alt True uses the alternative structure closer to a trie.
+    * This version uses the addNodeAlt function instead.
     * @param tree The Tree where all the String will be stored.
     * @param fileName name of the txt file.
     * @param alt boolean determining the storage method
@@ -33,13 +34,7 @@ public class Functions {
                 if (str.matches("[-,.?!'äöa-z]+")
                 && !(str.equals(".") || str.equals("?")
                 || str.equals("!") || str.equals("'"))) {
-                    Node curr;
-                    if (alt) {
-                        curr = prev.addNode(str);
-                    } else {
-                        curr = tree.addNode(str);
-                        tree.addEdge(prev, curr);
-                    }
+                    Node curr = tree.addNode(str, prev, alt);
                     prev = tree.checkEnd(str, curr);
                 }
             }
@@ -49,7 +44,7 @@ public class Functions {
 
 
     /**
-    * Forms sentences by utilizing the Nodes lottery() and checkEnd() method.
+    * Forms sentences by utilizing CheckEnd() and the Nodes lottery() method.
     * @param length length of sentence determined by user.
     * 0 returns random length.
     * @param tree The Tree containing the necessary data to form the sentence.

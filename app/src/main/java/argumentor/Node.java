@@ -5,8 +5,8 @@ import java.util.Random;
 
 /**
 * Nodes of the tree.
-* Contains a string used to build sentences
-* and a map of connected edges.
+* Contains a string used for build sentences
+* and a hashmap of connected edges.
 */
 public class Node {
     /**
@@ -14,7 +14,7 @@ public class Node {
     */
     private String word;
     /**
-    * Map containing Node - int pairings referred to as edges.
+    * Map containing Node-int pairings referred to as edges.
     * Keys are the Nodes that edges are connected to.
     * ints represent tickets or the "weight" of the edge.
     */
@@ -25,8 +25,8 @@ public class Node {
     private int ticketSum;
 
     /**
-    * Constructor that sets str to word, 0 to ticketSum
-    and creates a new HashMap.
+    * Constructor that sets param str to word, 0 to ticketSum
+    and creates a new hashmap.
     * @param str String set to word.
     */
     public Node(final String str) {
@@ -36,12 +36,11 @@ public class Node {
     }
 
     /**
-    * Determines the next Node by first calculating
-    * the sum of tickets with edgeSum()
-    * and then choosing a random number between that and 0.
+    * Determines the next Node by choosing a random
+    * number between 0 and the value of ticketSum.
     * The result is then given to checkWinner(),
     * that uses it to calculate the winning Node
-    * @return Node that won the lottery provided by checkWinner().
+    * @return Node that won the lottery.
     */
     public Node lottery() {
         Random rng = new Random();
@@ -50,12 +49,12 @@ public class Node {
     }
 
     /**
-    * Goes through the map of Node - int pairs
+    * Goes through the map of Node-int pairs
     * and calculates wich one contains the winning ticket.
     * @param count int representing the how far the loop will count.
     * @return Node contained in the winning edge. null if something goes wrong.
     */
-    public Node checkWinner(final int count) { // FIX THIS
+    public Node checkWinner(final int count) {
         Node winner = null;
         int winningTicket = count;
         for (Node curr : this.edges.keySet()) {
@@ -69,7 +68,7 @@ public class Node {
     }
 
     /**
-    * Adds and edge to the edges map.
+    * Adds an edge to the edges map.
     * @param node Node to be added as a key.
     */
     public void addEdge(final Node node) {
@@ -78,26 +77,8 @@ public class Node {
     }
 
     /**
-    * Connects given Node to this one.
-    * Increases tickets if already present.
-    * Used in alternative version of app.
-    * @param str String used in creating the new Node.
-    * @return returns the Node that was connected to this one.
-    */
-    public Node addNode(final String str) {
-        Node newNode = new Node(str);
-        Integer tickets = this.edges.get(newNode);
-        if (tickets == null) {
-            addEdge(newNode);
-            return newNode;
-        } else {
-            addTicket(newNode);
-            return newNode;
-        }
-    }
-
-    /**
-    * Increases an edges ticket score by 1 in the edges map.
+    * Increments the given edges ticket score and
+    * also the sum of tickets.
     * @param node key to the hashmap.
     */
     public void addTicket(final Node node) {
@@ -115,16 +96,16 @@ public class Node {
 
     /**
     * Returns a value from the edges map based on the given key Node.
-    * @param node Node serving as the key to the Map.
+    * @param node Node serving as the key to the hashmap.
     * @return int representing the amount of tickets.
     */
-    public int getTickets(final Node node) {
+    public Integer getTickets(final Node node) {
         return this.edges.get(node);
     }
 
     /**
     * Returns the edges map.
-    * @return HashMap containing all the Node - int pairings.
+    * @return Hashmap containing all the Node-int pairings.
     */
     public HashMap<Node, Integer> getEdgeMap() {
         return this.edges;

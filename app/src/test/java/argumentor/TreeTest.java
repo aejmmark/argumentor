@@ -19,32 +19,15 @@ public class TreeTest {
         assertNotNull("Should return HashMap", tree.getAllNodes());    
     }
 
-    @Test public void testAddNodeReturnsNode() {
+    @Test public void testAddToAllNodesReturnsNode() {
         Node testNode = new Node("test");
-        assertTrue("Should return testNode", tree.addNode("test").equals(testNode));
+        assertTrue("Should return testNode", tree.addToAllNodes("test").equals(testNode));
     }
 
-    @Test public void testAddNodeIncreasesMapSize() {
+    @Test public void testAddToAllNodesIncreasesMapSize() {
         int size = tree.getAllNodes().size();
-        tree.addNode("str");
+        tree.addToAllNodes("str");
         assertTrue("Size should increase", size < tree.getAllNodes().size());
-    }
-
-    @Test public void testAddEdgeIncreasesMapSize() {
-        Node testPrev = new Node("prev");
-        Node testCurr = new Node("curr");
-        int size = testPrev.getEdgeMap().size();
-        tree.addEdge(testPrev, testCurr);
-        assertTrue("Size should increase", size < testPrev.getEdgeMap().size());
-    }
-
-    @Test public void testAddEdgeSameEdgeIncreasesTicketValue() {
-        Node testPrev = new Node("prev");
-        Node testCurr = new Node("curr");
-        tree.addEdge(testPrev, testCurr);
-        int tickets = testPrev.getTickets(testCurr);
-        tree.addEdge(testPrev, testCurr);
-        assertTrue("Tickets value should increase", tickets < testPrev.getTickets(testCurr));
     }
 
     @Test public void testCheckEndReturnsRoot() {

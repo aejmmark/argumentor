@@ -41,19 +41,6 @@ public class NodeTest {
         assertTrue("Ticket amount should increase", testNode.getTickets(testNode) > amount);
     }
 
-    @Test public void testAddNodeIncreasesMapSize() {
-        int amount = testNode.getEdgeMap().size();
-        testNode.addNode("test2");
-        assertTrue("Maps size should increase", testNode.getEdgeMap().size() > amount);
-    }
-
-    @Test public void testAddNodeWontAddDuplicate() {
-        testNode.addNode("test2");
-        int amount = testNode.getEdgeMap().size();
-        testNode.addNode("test2");
-        assertTrue("Maps size should not increase", testNode.getEdgeMap().size() == amount);
-    }
-
     @Test public void testCheckWinnerReturnsCorrectWinner() {
         Node testNode2 = new Node("test2");
         Node testNode3 = new Node("test3");
