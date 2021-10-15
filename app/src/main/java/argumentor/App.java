@@ -3,7 +3,7 @@ package argumentor;
 public final class App {
 
     /**
-    * Constructor.
+    * Private constructor.
     */
     private App() {
     }
