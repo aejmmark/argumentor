@@ -19,6 +19,56 @@ public class TreeTest {
         assertNotNull("Should return HashMap", tree.getAllNodes());    
     }
 
+    @Test public void testAddNodeAddsEdgeToNode() {
+        Node testNode = new Node("test");
+        int size = testNode.getEdgeMap().size();
+        tree.addNode("str", testNode, false);
+        assertTrue("Hashmap size should increase", size < testNode.getEdgeMap().size());
+    }
+
+    @Test public void testAddNodeAddsEdgeToNodeAlt() {
+        Node testNode = new Node("test");
+        int size = testNode.getEdgeMap().size();
+        tree.addNode("str", testNode, true);
+        assertTrue("Hashmap size should increase", size < testNode.getEdgeMap().size());
+    }
+
+    @Test public void testAddNodeIncrementsTickets() {
+        Node testNode = new Node("test");
+        tree.addNode("str", testNode, false);
+        int tickets = testNode.getTicketSum();
+        tree.addNode("str", testNode, false);
+        assertTrue("Sum of tickets should increase", tickets < testNode.getTicketSum());
+    }
+
+    @Test public void testAddNodeIncrementsTicketsAlt() {
+        Node testNode = new Node("test");
+        tree.addNode("str", testNode, true);
+        int tickets = testNode.getTicketSum();
+        tree.addNode("str", testNode, true);
+        assertTrue("Sum of tickets should increase", tickets < testNode.getTicketSum());
+    }
+
+    @Test public void testAddNodeReturnsNode() {
+        assertNotNull("Should return Node", tree.addNode("str", tree.getRoot(), false));
+    }
+
+    @Test public void testAddNodeReturnsNodeAlt() {
+        assertNotNull("Should return Node", tree.addNode("str", tree.getRoot(), true));
+    }
+
+    @Test public void testAddNodeIncreasesAllNodes() {
+        int size = tree.getAllNodes().size();
+        tree.addNode("str", tree.getRoot(), false);
+        assertTrue("Hashmap size should increase", size < tree.getAllNodes().size());
+    }
+
+    @Test public void testAddNodeAltDoesNotIncreaseAllNodes() {
+        int size = tree.getAllNodes().size();
+        tree.addNode("str", tree.getRoot(), true);
+        assertTrue("Hashmap size not should increase", size == tree.getAllNodes().size());
+    }
+    
     @Test public void testAddToAllNodesReturnsNode() {
         Node testNode = new Node("test");
         assertTrue("Should return testNode", tree.addToAllNodes("test").equals(testNode));
