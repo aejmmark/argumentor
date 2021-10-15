@@ -53,11 +53,11 @@ public class FunctionsTest {
     }
 
     @Test public void testCheckEndFalseWhenCountBelowMax() {
-        assertFalse("Should return false", this.func.checkEnd(10, 1));
+        assertFalse("Should return false", this.func.checkGenerationEnd(10, 1));
     }
 
     @Test public void testCheckEndTrueWhenCountAboveMax() {
-        assertTrue("Should return true", this.func.checkEnd(10, 11));
+        assertTrue("Should return true", this.func.checkGenerationEnd(10, 11));
     }
 
     @Test public void checkPunctuationDeletesComma() {

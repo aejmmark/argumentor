@@ -86,7 +86,7 @@ public class Tree {
     * @return Returns the root Node if str ends the sentence.
     Otherwise it return the param Node.
     */
-   public Node checkEnd(final String str, final Node curr) {
+   public Node checkSentenceEnd(final String str, final Node curr) {
     if (str.length() > 1 && (str.charAt(str.length() - 1) == '.'
     || str.charAt(str.length() - 1) == '!'
     || str.charAt(str.length() - 1) == '?')) {

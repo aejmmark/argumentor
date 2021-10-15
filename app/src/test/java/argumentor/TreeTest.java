@@ -32,12 +32,12 @@ public class TreeTest {
 
     @Test public void testCheckEndReturnsRoot() {
         Node testNode = new Node("test");
-        assertTrue("Should return root",tree.checkEnd("str.", testNode).equals(tree.getRoot()));
+        assertTrue("Should return root",tree.checkSentenceEnd("str.", testNode).equals(tree.getRoot()));
     }
 
     @Test public void testCheckEndReturnsCurrentNode() {
         Node testNode = new Node("test");
-        assertTrue("Should return testNode",tree.checkEnd("str", testNode).equals(testNode));
+        assertTrue("Should return testNode",tree.checkSentenceEnd("str", testNode).equals(testNode));
         
     }
 }

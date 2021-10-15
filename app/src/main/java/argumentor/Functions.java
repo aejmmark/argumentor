@@ -34,7 +34,7 @@ public class Functions {
                 && !(str.equals(".") || str.equals("?")
                 || str.equals("!") || str.equals("'"))) {
                     Node curr = tree.addNode(str, prev, alt);
-                    prev = tree.checkEnd(str, curr);
+                    prev = tree.checkSentenceEnd(str, curr);
                 }
             }
         }
@@ -58,7 +58,7 @@ public class Functions {
         int maxWords = length;
         int wordCount = 1;
         while (true) {
-            if (checkEnd(maxWords, wordCount)) {
+            if (checkGenerationEnd(maxWords, wordCount)) {
                 sentence = checkPunctuation(sentence);
                 break;
             }
@@ -81,7 +81,7 @@ public class Functions {
     currently in the sentence.
     * @return true if the sentence will end, false if not
     */
-    public boolean checkEnd(final int maxWords, final int wordCount) {
+    public boolean checkGenerationEnd(final int maxWords, final int wordCount) {
         if (maxWords == 0) {
             Random rng = new Random();
             final int chance = 10;
