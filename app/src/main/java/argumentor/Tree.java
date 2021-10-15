@@ -58,11 +58,10 @@ public class Tree {
         Integer tickets = prev.getTickets(newNode);
         if (tickets == null) {
             prev.addEdge(newNode);
-            return newNode;
         } else {
             prev.addTicket(newNode);
-            return newNode;
         }
+        return newNode;
     }
 
     /**
