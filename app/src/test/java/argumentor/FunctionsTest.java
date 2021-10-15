@@ -74,7 +74,7 @@ public class FunctionsTest {
     @Test
     public void testCheckEndTrueWhenCountAboveMax() {
         final int check = 10;
-        final int count = 1;
+        final int count = 11;
         assertTrue("Should return true",
         this.func.checkGenerationEnd(check, count));
     }
