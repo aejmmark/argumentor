@@ -48,6 +48,8 @@ public class Tree {
     * Increases tickets if already present.
     * Does not add to allNodes if alt is true.
     * @param str String used in creating the new Node.
+    * @param prev Node that the new Node will be connected to.
+    * @param alt boolean determining wich version of the tree is used.
     * @return returns the Node that was connected to this one.
     */
     public Node addNode(final String str, final Node prev, final boolean alt) {
