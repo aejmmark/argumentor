@@ -51,6 +51,7 @@ public class UserInterface {
             if (input.equals("4")) {
                 System.out.println("enter name of txt file in app directory");
                 fileName = this.scn.nextLine();
+                System.out.println("data file changed");
             }
             if (input.equals("3")) {
                 System.out.println("testing default version");
