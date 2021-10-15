@@ -9,26 +9,32 @@ The nodes in the trie contain hashmaps with node-int pairings representing edges
 
 Graphs showing how the two versions react to the input "beans are awesome. I enjoy beans immensely. beans are horrible."
 
+------------------------------------------------------------------------------------
+
 Default
 
 ![](/docs/images/default.png)
 
+------------------------------------------------------------------------------------
+
 Alternative
 
 ![](/docs/images/alt.png)
+
+------------------------------------------------------------------------------------
 
 The generate functions starts from the root and chooses the next node by utilizing the root node's lottery method. It chooses a random number between 0 and the ticketSum variable and chooses the matching node by going through the edges hashmap. The winning node is then placed as the previous node and the loop continues until the sentence stops randomly or the given maximum word count is reached. After that the function returns the string containing all the words collected from the nodes.
 
 ### Time and space complexities
 
 Default data processing
-* Time: n loops consisting of three hashmap operations
+* Time: n loops consisting of two hashmap operations
 complexity: O(n)
-* Space: size n hashmap and n nodes each with their own hashmaps
+* Space: size n hashmap and up to n nodes each with their own hashmaps
 complexity: O(nm)
 
 Alternatve data processing
-* Time: n loops consisting of two hashmap operations
+* Time: n loops with a single hashmap operation
 complexity: O(n)
 * Space: n nodes each with their own hashmaps
 complexity: O(nm)
@@ -42,4 +48,4 @@ complexity: O(1)
 
 ### Issues and possible improvements
 
-Default version runs into issues if sentences beginning and ending in the same word are present in the source data. In these cases the generator may end up looping through the same sentence indefinitely. This is only notable on very large sentence length requests so it mainly affects performance testing.
+Default version runs into issues if sentences containing the same word twice are present in the source data. In these cases the generator may end up looping through the same sentence indefinitely. This is only notable on very large sentence length requests so for now it mainly affects performance testing.
