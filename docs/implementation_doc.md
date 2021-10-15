@@ -7,7 +7,8 @@ The processdata function reads the text file given as an parameter and builds a 
 The default version builds a trie with only one node for each word and a hashmap containing every node to help keep track. This version is slower but it allows for significantly more random word combinations even with smaller source material. The alternative version builds a more standard trie with several nodes containing the same word scattered throughout the tree. This version is faster but the generated sentences are copies of those found in the default source material meaning that a very large dataset would be required.
 The nodes in the trie contain hashmaps with node-int pairings representing edges. The int values represent the amount of tickets the node has that is then used to calculate the weight of the edge. The function starts from the root and adds new nodes to the previous node's hashmap. Every time it comes across a punctuation mark it resets the previous node back to being the root.
 
-Graphs showing how the two versions react to the input "beans are awesome. I enjoy beans immensely. beans are horrible."
+
+Graphs showing how the two versions react to the input "beans are awesome. I enjoy beans immensely. beans are horrible.":
 
 ------------------------------------------------------------------------------------
 
