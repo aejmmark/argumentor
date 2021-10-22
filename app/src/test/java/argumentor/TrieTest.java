@@ -5,7 +5,7 @@ import org.junit.Before;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
-public class TreeTest {
+public class TrieTest {
     private Tree tree;
 
     @Before

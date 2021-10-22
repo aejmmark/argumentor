@@ -1,158 +1,75 @@
 package argumentor;
 
-import java.util.HashMap;
 import java.util.Random;
+import java.util.HashMap;
 
-/**
-* Nodes of the tree.
-* Contains a string used for build sentences
-* and a hashmap of connected edges.
-*/
 public class Node {
-    /**
-    * String representing the word contained in the Node.
-    */
-    private String word;
-    /**
-    * Map containing Node-int pairings referred to as edges.
-    * Keys are the Nodes that edges are connected to.
-    * ints represent tickets or the "weight" of the edge.
-    */
-    private HashMap<Node, Integer> edges;
-    /**
-    * int representing the sum of tickets in the edge map.
-    */
+    private HashMap<String, Node> edges;
     private int ticketSum;
+    private boolean punc;
+    private int freq;
 
-    /**
-    * Constructor that sets param str to word, 0 to ticketSum
-    and creates a new hashmap.
-    * @param str String set to word.
-    */
-    public Node(final String str) {
-        this.word = str;
-        this.edges = new HashMap<Node, Integer>();
+    public Node() {
+        this.edges = new HashMap<String, Node>();
         this.ticketSum = 0;
+        this.punc = false;
+        this.freq = 1;
     }
 
-    /**
-    * Determines the next Node by choosing a random
-    * number between 0 and the value of ticketSum.
-    * The result is then given to checkWinner(),
-    * that uses it to calculate the winning Node
-    * @return Node that won the lottery.
-    */
-    public Node lottery() {
+    public String lottery() {
+        System.out.println("SUM " + ticketSum);
         Random rng = new Random();
         int winner = (rng.nextInt(ticketSum));
         return this.checkWinner(winner);
     }
 
-    /**
-    * Goes through the map of Node-int pairs
-    * and calculates wich one contains the winning ticket.
-    * @param count int representing the how far the loop will count.
-    * @return Node contained in the winning edge. null if something goes wrong.
-    */
-    public Node checkWinner(final int count) {
-        Node winner = null;
+    public String checkWinner(final int count) {
+        String winner = null;
         int winningTicket = count;
-        for (Node curr : this.edges.keySet()) {
-            winningTicket -= edges.get(curr);
+        for (String str : this.edges.keySet()) {
+            winningTicket -= this.edges.get(str).getFreq(); //could try to optimize this
             if (winningTicket <= 0) {
-                winner = curr;
+                winner = str;
                 break;
             }
         }
         return winner;
     }
 
-    /**
-    * Adds an edge to the edges map.
-    * @param node Node to be added as a key.
-    */
-    public void addEdge(final Node node) {
-        this.edges.put(node, 1);
+    public void addEdge(final String str, final Node node) {
+        this.edges.put(str, node);
         this.ticketSum++;
     }
 
-    /**
-    * Increments the given edges ticket score and
-    * also the sum of tickets.
-    * @param node key to the hashmap.
-    */
-    public void addTicket(final Node node) {
-        this.edges.put(node, this.edges.get(node) + 1);
-        this.ticketSum++;
+    public Node getNode(final String str) {
+        return this.edges.get(str);
     }
 
-    /**
-    * Returns the word contained within the Node.
-    * @return String representing the word.
-    */
-    public String getWord() {
-        return this.word;
-    }
-
-    /**
-    * Returns a value from the edges map based on the given key Node.
-    * @param node Node serving as the key to the hashmap.
-    * @return int representing the amount of tickets.
-    */
-    public Integer getTickets(final Node node) {
-        return this.edges.get(node);
-    }
-
-    /**
-    * Returns the edges map.
-    * @return Hashmap containing all the Node-int pairings.
-    */
-    public HashMap<Node, Integer> getEdgeMap() {
+    public HashMap<String, Node> getEdgeMap() {
         return this.edges;
     }
 
-    /**
-    * Returns the value of the ticketSum variable.
-    * @return int representing the total of tickets in the edges map.
-    */
     public int getTicketSum() {
         return this.ticketSum;
     }
 
-    /**
-     * hashCode method.
-    */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((word == null) ? 0 : word.hashCode());
-        return result;
+    public void setPunc() {
+        this.punc = true;
     }
 
-    /**
-    * Determines equality based on the value of the word variable.
-    * @return true if Nodes are equal, false if not or object is null.
-    */
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Node other = (Node) obj;
-        if (word == null) {
-            if (other.word != null) {
-                return false;
-            }
-        } else if (!word.equals(other.word)) {
-            return false;
-        }
-        return true;
+    public boolean isPunc() {
+        return this.punc;
+    }
+
+    public int getFreq() {
+        return this.freq;
+    }
+
+    public void incrementFreq() {
+        this.freq++;;
+    }
+
+    public void incrementTicketSum() {
+        this.ticketSum++;;
     }
 }

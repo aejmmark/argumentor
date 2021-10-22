@@ -2,6 +2,7 @@ package argumentor;
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -9,69 +10,6 @@ import java.io.FileNotFoundException;
 * Contains the main functions for processing data and generating sentences.
 */
 public class Functions {
-    /**
-    * Scans through the data.txt file and
-    * adds all the separate words to the given Tree.
-    * Makes use of the addNode() and checkEnd() methods.
-    * alt False uses the original tree based on the allNodes map.
-    * alt True uses the alternative structure closer to a trie.
-    * @param tree The Tree where all the String will be stored.
-    * @param fileName name of the txt file.
-    * @param alt boolean determining the storage method
-    */
-    public void
-    processData(final boolean alt, final String fileName, final Tree tree)
-    throws FileNotFoundException {
-        File file = new File(System.getProperty("user.dir")
-        + "/" + fileName);
-        Scanner scn = new Scanner(file);
-        Node prev = tree.getRoot();
-        while (scn.hasNextLine()) {
-            String line = scn.nextLine().toLowerCase();
-            String[] strs = line.split(" ");
-            for (String str : strs) {
-                if (str.matches("[-,.?!'äöa-z]+")
-                && !(str.equals(".") || str.equals("?")
-                || str.equals("!") || str.equals("'"))) {
-                    Node curr = tree.addNode(str, prev, alt);
-                    prev = tree.checkSentenceEnd(str, curr);
-                }
-            }
-        }
-        scn.close();
-    }
-
-
-    /**
-    * Forms sentences by utilizing CheckEnd() and the Nodes lottery() method.
-    * @param length length of sentence determined by user.
-    * 0 returns random length.
-    * @param tree The Tree containing the necessary data to form the sentence.
-    * @return String representing the formed sentence.
-    */
-    public String generate(final int length, final Tree tree) {
-        Node root = tree.getRoot();
-        Node curr = root.lottery();
-        String sentence = curr.getWord();
-        sentence = sentence.substring(0, 1).toUpperCase()
-        + sentence.substring(1).toLowerCase();
-        int maxWords = length;
-        int wordCount = 1;
-        while (true) {
-            if (checkGenerationEnd(maxWords, wordCount)) {
-                sentence = checkPunctuation(sentence);
-                break;
-            }
-            if (curr.getTicketSum() == 0) {
-                curr = root;
-            }
-            curr = curr.lottery();
-            sentence = (sentence + " " + curr.getWord());
-            wordCount++;
-        }
-        return sentence;
-    }
-
     /**
     * Checks whether or not the sentence should end
     * based on the amount of words it currently has.
@@ -109,6 +47,100 @@ public class Functions {
                 sentence = sentence.substring(0, sentence.length() - 1);
             }
             sentence = (sentence + ".");
+        }
+        return sentence;
+    }
+
+    public void processData(final String fileName, final Trie trie,
+    final int chainLength) throws FileNotFoundException {
+        File file = new File(System.getProperty("user.dir")
+        + "/" + fileName);
+        Scanner scn = new Scanner(file);
+        ArrayList<String> wordList = new ArrayList<>();
+        while (scn.hasNextLine()) {
+            String line = scn.nextLine().toLowerCase();
+            String[] strings = line.split(" ");
+            for (String str : strings) {
+                if (matchesChars(str)) {
+                    wordList.add(str);
+                } else {
+                    continue;
+                }
+                if (wordList.size() > chainLength) {
+                    wordList.remove(0);
+                }
+                if (trie.addNodes(wordList)) {
+                    wordList.clear();
+                }
+            }
+        }
+        scn.close();
+    }
+
+    public boolean matchesChars(final String str) {
+        if (str.matches("[-,.?!'äöa-z]+")
+            && !(str.equals(".") || str.equals("?")
+            || str.equals("!") || str.equals("'"))) {
+                return true;
+        }
+        return false;
+    }
+
+    public String generate(final int length,
+    final Trie trie, final int chainLength) {
+        Node curr = trie.getRoot();
+        ArrayList<String> wordList = new ArrayList<>();
+        String sentence = "";
+        //sentence = sentence.substring(0, 1).toUpperCase()    yeah this should probably be after all puncs
+        //+ sentence.substring(1).toLowerCase();
+        int maxWords = length;
+        int wordCount = 0;
+        while (true) {
+            if (checkGenerationEnd(maxWords, wordCount)) {
+                sentence = checkPunctuation(sentence);
+                break;
+            }
+
+            System.out.println(wordList);
+            
+
+            // check list if empty
+            if (wordList.isEmpty()) {
+                curr = trie.getRoot();
+            } else {
+                curr = curr.getNode(wordList.get(wordList.size()-1));
+                if (trie.checkSentenceEnd(wordList.get(wordList.size()-1))) { // REMOVE THIS
+                    System.out.println("Punc word!");
+                    if (curr.isPunc()) {
+                        System.out.println("Curr is punc, ticketsum" + curr.getTicketSum());
+                    } else {
+                        System.out.println("Curr is not punc, ticketsum " + curr.getTicketSum());
+                    }
+                }
+            }
+
+            System.out.println("Skipped!");
+
+            // this stuff is for <chainlength lists or is it???
+            if (curr.getTicketSum() == 0) {
+                System.out.println("Ticketsum 0!");
+                if (curr.isPunc()) {
+                    System.out.println("Punc word handled!");
+                    System.out.println("Punc word! " + wordList.get(wordList.size()-1));
+                    wordList.clear();
+                }
+                curr = trie.getRoot();
+            }
+
+
+
+            if (wordList.size() == chainLength) {
+                wordList = trie.nodeSearch(wordList, chainLength);
+            } else {
+                wordList.add(curr.lottery());
+            }
+            sentence = (sentence + " " + wordList.get(wordList.size()-1));
+            wordCount++;
         }
         return sentence;
     }
