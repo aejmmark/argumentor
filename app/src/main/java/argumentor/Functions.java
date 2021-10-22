@@ -88,11 +88,9 @@ public class Functions {
 
     public String generate(final int length,
     final Trie trie, final int chainLength) {
-        Node curr = trie.getRoot();
+        Node currNode = trie.getRoot();
         ArrayList<String> wordList = new ArrayList<>();
         String sentence = "";
-        //sentence = sentence.substring(0, 1).toUpperCase()    yeah this should probably be after all puncs
-        //+ sentence.substring(1).toLowerCase();
         int maxWords = length;
         int wordCount = 0;
         while (true) {
@@ -106,42 +104,27 @@ public class Functions {
 
             // check list if empty
             if (wordList.isEmpty()) {
-                curr = trie.getRoot();
+                currNode = trie.getRoot();
             } else {
-                curr = curr.getNode(wordList.get(wordList.size()-1));
-                if (trie.checkSentenceEnd(wordList.get(wordList.size()-1))) { // REMOVE THIS
-                    System.out.println("Punc word!");
-                    if (curr.isPunc()) {
-                        System.out.println("Curr is punc, ticketsum" + curr.getTicketSum());
-                    } else {
-                        System.out.println("Curr is not punc, ticketsum " + curr.getTicketSum());
-                    }
-                }
-            }
-
-            System.out.println("Skipped!");
-
-            // this stuff is for <chainlength lists or is it???
-            if (curr.getTicketSum() == 0) {
-                System.out.println("Ticketsum 0!");
-                if (curr.isPunc()) {
-                    System.out.println("Punc word handled!");
-                    System.out.println("Punc word! " + wordList.get(wordList.size()-1));
+                currNode = currNode.getNode(wordList.get(wordList.size()-1));
+                if (currNode.getTicketSum() == 0 || trie.checkSentenceEnd(wordList.get(wordList.size()-1))) {
                     wordList.clear();
+                    currNode = trie.getRoot();
                 }
-                curr = trie.getRoot();
             }
-
 
 
             if (wordList.size() == chainLength) {
                 wordList = trie.nodeSearch(wordList, chainLength);
             } else {
-                wordList.add(curr.lottery());
+                wordList.add(currNode.lottery());
             }
             sentence = (sentence + " " + wordList.get(wordList.size()-1));
             wordCount++;
         }
         return sentence;
     }
+
+    //sentence = sentence.substring(0, 1).toUpperCase()    yeah this should probably be after all puncs
+        //+ sentence.substring(1).toLowerCase();
 }

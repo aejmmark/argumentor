@@ -6,13 +6,11 @@ import java.util.HashMap;
 public class Node {
     private HashMap<String, Node> edges;
     private int ticketSum;
-    private boolean punc;
     private int freq;
 
     public Node() {
         this.edges = new HashMap<String, Node>();
         this.ticketSum = 0;
-        this.punc = false;
         this.freq = 1;
     }
 
@@ -51,14 +49,6 @@ public class Node {
 
     public int getTicketSum() {
         return this.ticketSum;
-    }
-
-    public void setPunc() {
-        this.punc = true;
-    }
-
-    public boolean isPunc() {
-        return this.punc;
     }
 
     public int getFreq() {

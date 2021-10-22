@@ -37,15 +37,12 @@ public class Trie {
             Node curr = prev.getNode(str);
             if (curr == null) {
                 curr = new Node();
-                if (checkSentenceEnd(str)) {
-                    curr.setPunc();
-                }
                 prev.addEdge(str, curr);
             } else {
                 curr.incrementFreq();
                 prev.incrementTicketSum();    
             }
-            if (curr.isPunc()) {
+            if (checkSentenceEnd(str)) {
                 return true;
             }
             prev = curr;
