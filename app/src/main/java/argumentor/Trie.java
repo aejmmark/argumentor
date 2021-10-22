@@ -19,13 +19,11 @@ public class Trie {
         for (String str : newList) {
             curr = curr.getNode(str);
             if (curr == null || curr.getTicketSum() == 0) { // failsafe in case branch is shorter
-                System.out.println("nodeSearch NULL");
                 newList.clear();
                 newList.add(this.root.lottery());
                 return newList;
             }
         }
-        System.out.println("nodeSearch as intended");
         newList.remove(0);
         newList.add(curr.lottery());
         return newList;

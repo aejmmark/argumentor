@@ -26,7 +26,7 @@ public class UserInterface {
     * markov chains.
     */
     final int maxChain = 7;
-    final int minChain = 2;
+    final int minChain = 1;
 
     /**
     * Constructor.
@@ -64,7 +64,7 @@ public class UserInterface {
                 break;
             }
             if (input.equals("1")) {
-                System.out.println("enter desired chain length between 2 and 7");
+                System.out.println("enter desired chain length between 1 and 7");
                 while(true) {
                     if (this.scn.hasNextInt()) {
                         int chainLength = this.scn.nextInt();
@@ -100,23 +100,6 @@ public class UserInterface {
         System.out.println("(0) generates random length");
         System.out.println("(exit) leaves the app");
         while (true) {
-            //System.out.println("Node 1");
-            //for (String str : this.trie.getRoot().getEdgeMap().keySet()) {
-            //    System.out.println(str);
-            //}
-            //for (TrieNode node : this.trie.getRoot().getEdgeMap().values()) {
-            //    System.out.println("New Branch!");
-            //    for (TrieNode node2 : node.getEdgeMap().values()) {
-            //        System.out.println("Node 2");
-            //        for (String str2 : node.getEdgeMap().keySet()) {
-            //            System.out.println(str2);
-            //        }
-            //        System.out.println("Node 3");
-            //        for (String str3 : node2.getEdgeMap().keySet()) {
-            //            System.out.println(str3);
-            //        }
-            //    }
-            //}
             if (this.scn.hasNextInt()) {
                 int length = this.scn.nextInt();
                 String result = this.func.generate(length, trie, chainLength);
