@@ -93,7 +93,7 @@ public class FunctionsTest {
     }
 
     @Test
-    public void testCheckEndFalseWhenCountBelowMax() {
+    public void testCheckGenerationEndFalseWhenCountBelowMax() {
         final int check = 10;
         final int count = 1;
         assertFalse("Should return false",
@@ -101,11 +101,20 @@ public class FunctionsTest {
     }
 
     @Test
-    public void testCheckEndTrueWhenCountAboveMax() {
+    public void testCheckGenerationEndTrueWhenCountAboveMax() {
         final int check = 10;
         final int count = 11;
         assertTrue("Should return true",
         this.func.checkGenerationEnd(check, count));
+    }
+
+    @Test
+    public void testCheckGenerationEndReturnsWithZero() {
+        final int check = 0;
+        final int count = 11;
+        assertTrue("Should return true or false",
+        !this.func.checkGenerationEnd(check, count)
+        || this.func.checkGenerationEnd(check, count));
     }
 
     @Test
