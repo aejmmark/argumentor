@@ -2,65 +2,93 @@ package argumentor;
 
 import org.junit.Test;
 import org.junit.Before;
+import java.util.Scanner;
+import java.io.File;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertFalse;
 
 public class FunctionsTest {
     private Functions func;
-    private Tree tree;
+    private Trie trie;
+    final int chainLength = 3;
+    final int sentenceLength = 3;
+    final int listSize = 2;
 
     @Before
     public void setUp() {
         this.func = new Functions();
-        this.tree = new Tree();
+        this.trie = new Trie();
     }
 
     @Test
-    public void testOGProcessDataAddsNodesToRoot() {
+    public void testProcessDataAddsNodesToRoot() {
         try {
-            this.func.processData(false, "data.txt", this.tree);
+            this.func.processData("data.txt", this.trie, this.chainLength);
         } catch (Exception e) {
             System.out.println(e);
         }
         assertTrue("Value should increase",
-        this.tree.getRoot().getTicketSum() > 0);
-    }
-
-    @Test
-    public void testAltProcessDataAddsNodesToRoot() {
-        try {
-            this.func.processData(true, "data.txt", this.tree);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        assertTrue("Value should increase",
-        this.tree.getRoot().getTicketSum() > 0);
+        this.trie.getRoot().getTicketSum() > 0);
     }
 
     @Test
     public void testGenerateReturnSentence() {
         try {
-            this.func.processData(true, "data.txt", this.tree);
+            this.func.processData("data.txt", this.trie, this.chainLength);
         } catch (Exception e) {
             System.out.println(e);
         }
         assertNotNull("Should return String",
-        this.func.generate(0, this.tree));
+        this.func.generate(this.sentenceLength, this.trie, this.listSize));
     }
 
     @Test
-    public void testGeneratedSentenceBelowGivenLength() {
-        final int maxLength = 5;
+    public void testGeneratedSentenceFoundInData() {
+        boolean contained = false;
         try {
-            this.func.processData(true, "data.txt", this.tree);
+            this.func.processData("data.txt", this.trie, this.chainLength);
+            String sentence = this.func.generate(
+            this.sentenceLength, this.trie, this.listSize);
+            File file = new File(System.getProperty("user.dir")
+            + "/data.txt");
+            Scanner scn = new Scanner(file);
+            String data = "";
+            while (scn.hasNextLine()) {
+                String line = scn.nextLine().toLowerCase();
+                String[] words = line.split(" ");
+                for (String str : words) {
+                    if (func.matchesChars(str)) {
+                        data = data + " " + str;
+                    }
+                }
+            }
+            if (sentence.charAt(sentence.length()-1) == '.') {
+                sentence = sentence.substring(0, sentence.length()-1);
+            }
+            if (data.contains(sentence)) {
+                contained = true;
+            }
+            System.out.println(sentence);
+            scn.close();
         } catch (Exception e) {
             System.out.println(e);
         }
-        String sentence = this.func.generate(maxLength, this.tree);
+        assertTrue("Sentence should be in data", contained);
+    }
+
+    @Test
+    public void testGeneratedSentenceMatchGivenLength() {
+        final int length = this.sentenceLength + 1;
+        try {
+            this.func.processData("data.txt", this.trie, this.chainLength);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        String sentence = this.func.generate(this.sentenceLength, this.trie, this.listSize);
         String[] words = sentence.split(" ");
-        assertTrue("Amount of words should be below 5",
-        words.length <= maxLength);
+        assertTrue("Amount of words should be 3",
+        words.length == length);
     }
 
     @Test
@@ -80,37 +108,73 @@ public class FunctionsTest {
     }
 
     @Test
-    public void checkPunctuationDeletesComma() {
+    public void testCheckPunctuationDeletesComma() {
         String str = "test,";
         assertTrue("Length should be equal",
         str.length() == this.func.checkPunctuation(str).length());
     }
 
     @Test
-    public void checkPunctuationAddsDot() {
+    public void testCheckPunctuationAddsDot() {
         String str = "test";
         assertTrue("Length should be greater",
         str.length() < this.func.checkPunctuation(str).length());
     }
 
     @Test
-    public void checkPunctuationIgnoresDot() {
+    public void testCheckPunctuationIgnoresDot() {
         String str = "test.";
         assertTrue("Strings should be equal",
         str.equals(this.func.checkPunctuation(str)));
     }
 
     @Test
-    public void checkPunctuationIgnoresQmark() {
+    public void testCheckPunctuationIgnoresQmark() {
         String str = "test?";
         assertTrue("Strings should be equal",
         str.equals(this.func.checkPunctuation(str)));
     }
 
     @Test
-    public void checkPunctuationIgnoresExmark() {
+    public void testCheckPunctuationIgnoresExmark() {
         String str = "test!";
         assertTrue("Strings should be equal",
         str.equals(this.func.checkPunctuation(str)));
+    }
+
+    @Test
+    public void testMatchesCharsReturnsTrueWhenMatch() {
+        assertTrue("Should return True",
+        this.func.matchesChars("hello"));
+    }
+
+    @Test
+    public void testMatchesCharsReturnsFalseWhenNoMatch() {
+        assertFalse("Should return False",
+        this.func.matchesChars("()"));
+    }
+
+    @Test
+    public void testMatchesCharsReturnsFalseWhenDot() {
+        assertFalse("Should return False",
+        this.func.matchesChars("."));
+    }
+
+    @Test
+    public void testMatchesCharsReturnsFalseWhenXmark() {
+        assertFalse("Should return False",
+        this.func.matchesChars("!"));
+    }
+
+    @Test
+    public void testMatchesCharsReturnsFalseWhenQmark() {
+        assertFalse("Should return False",
+        this.func.matchesChars("?"));
+    }
+
+    @Test
+    public void testMatchesCharsReturnsFalseWhenApo() {
+        assertFalse("Should return False",
+        this.func.matchesChars("'"));
     }
 }

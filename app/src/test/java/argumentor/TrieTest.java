@@ -2,121 +2,120 @@ package argumentor;
 
 import org.junit.Test;
 import org.junit.Before;
+import java.util.ArrayList;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 public class TrieTest {
-    private Tree tree;
+    private Trie trie;
+    private ArrayList<String> list;
+    final int chainLength = 3;
 
     @Before
     public void setUp() {
-        tree = new Tree();
+        this.trie = new Trie();
+        this.list = new ArrayList<String>();
+        this.list.add("i");
+        this.list.add("was");
     }
 
     @Test
     public void testRootGetter() {
         assertNotNull("Should return root Node",
-        tree.getRoot());
+        this.trie.getRoot());
     }
 
     @Test
-    public void testMapGetter() {
-        assertNotNull("Should return HashMap",
-        tree.getAllNodes());
-    }
-
-    @Test
-    public void testAddNodeAddsEdgeToNode() {
-        Node testNode = new Node("test");
-        int size = testNode.getEdgeMap().size();
-        tree.addNode("str", testNode, false);
+    public void testAddNodeAddsEdgesToRoot() {
+        this.trie.addNodes(list);
         assertTrue("Hashmap size should increase",
-        size < testNode.getEdgeMap().size());
+        this.trie.getRoot().getEdgeMap().size() > 0);
     }
 
     @Test
-    public void testAddNodeAddsEdgeToNodeAlt() {
-        Node testNode = new Node("test");
-        int size = testNode.getEdgeMap().size();
-        tree.addNode("str", testNode, true);
-        assertTrue("Hashmap size should increase",
-        size < testNode.getEdgeMap().size());
+    public void testAddNodeAddsStopsAtDot() {
+        this.list = new ArrayList<>();
+        this.list.add("unit.");
+        this.list.add("test");
+        this.list.add("list");
+        this.trie.addNodes(list);
+        assertTrue("Hashmap size should be 0",
+        this.trie.getRoot().getNode("unit.").getEdgeMap().size()
+        == 0);
     }
 
     @Test
-    public void testAddNodeIncrementsTickets() {
-        Node testNode = new Node("test");
-        tree.addNode("str", testNode, false);
-        int tickets = testNode.getTicketSum();
-        tree.addNode("str", testNode, false);
-        assertTrue("Sum of tickets should increase",
-        tickets < testNode.getTicketSum());
+    public void testAddNodeAddsFreq() {
+        this.trie.addNodes(list);
+        int freq = this.trie.getRoot().getNode("i").getFreq();
+        this.trie.addNodes(list);
+        assertTrue("Freq should increase",
+        this.trie.getRoot().getNode("i").getFreq() > freq);
     }
 
     @Test
-    public void testAddNodeIncrementsTicketsAlt() {
-        Node testNode = new Node("test");
-        tree.addNode("str", testNode, true);
-        int tickets = testNode.getTicketSum();
-        tree.addNode("str", testNode, true);
-        assertTrue("Sum of tickets should increase",
-        tickets < testNode.getTicketSum());
+    public void testAddNodeAddsToTicketSum() {
+        int sum = this.trie.getRoot().getTicketSum();
+        this.trie.addNodes(list);
+        assertTrue("TicketSum should increase",
+        this.trie.getRoot().getTicketSum() > sum);
     }
 
     @Test
-    public void testAddNodeReturnsNode() {
-        assertNotNull("Should return Node",
-        tree.addNode("str", tree.getRoot(), false));
+    public void testAddNodeReturnsFalseWhenNoDotsPresent() {
+        assertFalse("Should return false",
+        this.trie.addNodes(list));
     }
 
     @Test
-    public void testAddNodeReturnsNodeAlt() {
-        assertNotNull("Should return Node",
-        tree.addNode("str", tree.getRoot(), true));
+    public void testAddNodeReturnsTrueWhenDotsPresent() {
+        this.list.clear();
+        this.list.add("list.");
+        this.list.add("list");
+        assertTrue("Should return true",
+        this.trie.addNodes(list));
     }
 
     @Test
-    public void testAddNodeIncreasesAllNodes() {
-        int size = tree.getAllNodes().size();
-        tree.addNode("str", tree.getRoot(), false);
-        assertTrue("Hashmap size should increase",
-        size < tree.getAllNodes().size());
+    public void testNodeSearchReturnsEqualSizeList() {
+        Functions func = new Functions();
+        try {
+            func.processData("data.txt", this.trie, chainLength);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        assertTrue("List size should remain the same",
+        this.list.size() == this.trie.nodeSearch(this.list).size());
     }
 
     @Test
-    public void testAddNodeAltDoesNotIncreaseAllNodes() {
-        int size = tree.getAllNodes().size();
-        tree.addNode("str", tree.getRoot(), true);
-        assertTrue("Hashmap size not should increase",
-        size == tree.getAllNodes().size());
+    public void testNodeSearchReturnsEmptyListIfSearchFails() {
+        assertTrue("List should be empty",
+        this.trie.nodeSearch(list).isEmpty());
     }
 
     @Test
-    public void testAddToAllNodesReturnsNode() {
-        Node testNode = new Node("test");
-        assertTrue("Should return testNode",
-        tree.addToAllNodes("test").equals(testNode));
+    public void testCheckSentenceEndReturnsTrueWhenDotPresent() {
+        assertTrue("Should return True",
+        this.trie.checkSentenceEnd("str."));
     }
 
     @Test
-    public void testAddToAllNodesIncreasesMapSize() {
-        int size = tree.getAllNodes().size();
-        tree.addToAllNodes("str");
-        assertTrue("Size should increase",
-        size < tree.getAllNodes().size());
+    public void testCheckSentenceEndReturnsTrueWhenXmarkPresent() {
+        assertTrue("Should return True",
+        this.trie.checkSentenceEnd("str!"));
     }
 
     @Test
-    public void testCheckEndReturnsRoot() {
-        Node testNode = new Node("test");
-        assertTrue("Should return root",
-        tree.checkSentenceEnd("str.", testNode).equals(tree.getRoot()));
+    public void testCheckSentenceEndReturnsTrueWhenQuestionmarkPresent() {
+        assertTrue("Should return True",
+        this.trie.checkSentenceEnd("str?"));
     }
 
     @Test
-    public void testCheckEndReturnsCurrentNode() {
-        Node testNode = new Node("test");
-        assertTrue("Should return testNode",
-        tree.checkSentenceEnd("str", testNode).equals(testNode));
+    public void testCheckSentenceEndReturnsFalseWhenNoDotPresent() {
+        assertFalse("Should return False",
+        this.trie.checkSentenceEnd("str"));
     }
 }
