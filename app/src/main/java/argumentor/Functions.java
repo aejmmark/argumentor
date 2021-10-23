@@ -11,6 +11,9 @@ import java.io.FileNotFoundException;
 */
 public class Functions {
 
+    /**
+    * 
+    */
     public void processData(final String fileName, final Trie trie,
     final int chainLength) throws FileNotFoundException {
         File file = new File(System.getProperty("user.dir")
@@ -38,7 +41,7 @@ public class Functions {
     }
 
     public String generate(final int length,
-    final Trie trie, final int chainLength) {
+    final Trie trie, final int listSize) {
         Node currNode = trie.getRoot();
         ArrayList<String> wordList = new ArrayList<>();
         String sentence = "";
@@ -49,23 +52,23 @@ public class Functions {
                 sentence = checkPunctuation(sentence);
                 break;
             }
-            if (wordList.size() == chainLength) {
+            if (wordList.size() == listSize) {
                 if (trie.checkSentenceEnd(wordList.get(wordList.size()-1))) {
                     wordList.clear();
                 } else {
-                    wordList = trie.nodeSearch(wordList, chainLength);
+                    wordList = trie.nodeSearch(wordList);
                 }
             }
-            if (wordList.size() < chainLength) {
-                if (wordList.isEmpty()) {
-                    currNode = trie.getRoot();
-                } else {
+            if (wordList.size() < listSize) {
+                if (!wordList.isEmpty()) {
                     currNode = currNode.getNode(wordList.get(wordList.size()-1));
                     if (currNode.getTicketSum() == 0 
                     || trie.checkSentenceEnd(wordList.get(wordList.size()-1))) {
                         wordList.clear();
-                        currNode = trie.getRoot();
                     }
+                }
+                if (wordList.isEmpty()) {
+                    currNode = trie.getRoot();
                 }
                 wordList.add(currNode.lottery());
             }

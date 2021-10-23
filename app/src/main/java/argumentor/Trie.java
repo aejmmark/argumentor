@@ -13,14 +13,13 @@ public class Trie {
         return this.root;
     }
 
-    public ArrayList<String> nodeSearch(final ArrayList<String> list, final int chainLength) {
+    public ArrayList<String> nodeSearch(final ArrayList<String> list) {
         ArrayList<String> newList = new ArrayList<String>(list);
         Node curr = this.root;
         for (String str : newList) {
             curr = curr.getNode(str);
             if (curr == null || curr.getTicketSum() == 0) { // failsafe in case branch is shorter
                 newList.clear();
-                newList.add(this.root.lottery());
                 return newList;
             }
         }

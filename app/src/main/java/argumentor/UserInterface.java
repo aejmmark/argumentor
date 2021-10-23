@@ -74,9 +74,10 @@ public class UserInterface {
                         if (chainLength > maxChain) {
                             chainLength = maxChain;
                         }
+                        int listSize = chainLength-1;
                         try {
-                            this.func.processData(fileName, trie, chainLength+1);
-                            sentenceGeneration(chainLength);
+                            this.func.processData(fileName, trie, chainLength);
+                            sentenceGeneration(listSize);
                             return;
                             
                         } catch (Exception e) {
@@ -87,22 +88,20 @@ public class UserInterface {
                 }
             }
         }
-        System.out.println("");
-        System.out.println("bye");
         this.scn.close();
     }
 
     /**
     * Sentence generation loop.
     */
-    public void sentenceGeneration(final int chainLength) {
+    public void sentenceGeneration(final int listSize) {
         System.out.println("enter desired amount of words");
         System.out.println("(0) generates random length");
         System.out.println("(exit) leaves the app");
         while (true) {
             if (this.scn.hasNextInt()) {
                 int length = this.scn.nextInt();
-                String result = this.func.generate(length, trie, chainLength);
+                String result = this.func.generate(length, trie, listSize);
                 System.out.println(result);
             } else {
                 String input = this.scn.nextLine();

@@ -15,7 +15,6 @@ public class Node {
     }
 
     public String lottery() {
-        System.out.println("SUM " + ticketSum);
         Random rng = new Random();
         int winner = (rng.nextInt(ticketSum));
         return this.checkWinner(winner);
@@ -25,7 +24,7 @@ public class Node {
         String winner = null;
         int winningTicket = count;
         for (String str : this.edges.keySet()) {
-            winningTicket -= this.edges.get(str).getFreq(); //could try to optimize this
+            winningTicket -= this.edges.get(str).getFreq();
             if (winningTicket <= 0) {
                 winner = str;
                 break;
