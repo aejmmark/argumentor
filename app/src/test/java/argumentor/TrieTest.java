@@ -90,12 +90,6 @@ public class TrieTest {
     }
 
     @Test
-    public void testNodeSearchReturnsEmptyListIfSearchFails() {
-        assertTrue("List should be empty",
-        this.trie.nodeSearch(list).isEmpty());
-    }
-
-    @Test
     public void testCheckPunctuationReturnsTrueWhenDotPresent() {
         assertTrue("Should return True",
         this.trie.checkPunctuation("str."));
