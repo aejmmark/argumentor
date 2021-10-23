@@ -52,10 +52,10 @@ public class Functions {
     /**
     * Generates a sentence from words in the given trie.
     * Uses checkGenerationEnd() to determine when to stop.
-    * Uses the wordList is below listSize it adds words by
-    * using lottery() directly. Returns to root if the listis empty.
-    * Otherwise it uses nodeSearch().
     * Clears the list if checkPunctuation returns true.
+    * Uses nodeSearch if the list size matches listSize.
+    * Otherwise uses lottery to get the next string.
+    * Returns to root if the list is empty.
     * @param length Length of generated sentence.
     * 0 returns random length.
     * @param trie Trie containing all the strings.
@@ -74,20 +74,18 @@ public class Functions {
                 sentence = addPunctuation(sentence);
                 break;
             }
+            if (!wordList.isEmpty()
+            && trie.checkPunctuation(wordList.get(wordList.size() - 1))) {
+                wordList.clear();
+            }
             if (wordList.size() == listSize) {
-                if (trie.checkPunctuation(wordList.get(wordList.size() - 1))) {
-                    wordList.clear();
-                } else {
-                    wordList = trie.nodeSearch(wordList);
-                }
+                wordList = trie.nodeSearch(wordList);
             }
             if (wordList.size() < listSize) {
                 if (!wordList.isEmpty()) {
                     currNode = currNode.getNode(wordList.get(
                     wordList.size() - 1));
-                    if (currNode.getTicketSum() == 0
-                    || trie.checkPunctuation(
-                    wordList.get(wordList.size() - 1))) {
+                    if (currNode.getTicketSum() == 0) {
                         wordList.clear();
                     }
                 }
