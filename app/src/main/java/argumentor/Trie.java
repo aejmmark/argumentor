@@ -32,7 +32,6 @@ public class Trie {
     * Once it reaches depth-1 of the three it uses the lottery function
     * to determine the next word and adds it to the list.
     * Removes the oldest element of the list.
-    * Returns an empty list if it encounters irregularities
     * in the data.
     * @param list The list used for comparison.
     * @return The modified list.
@@ -42,10 +41,6 @@ public class Trie {
         Node curr = this.root;
         for (String str : newList) {
             curr = curr.getNode(str);
-            if (curr == null || curr.getTicketSum() == 0) {
-                newList.clear();
-                return newList;
-            }
         }
         newList.remove(0);
         newList.add(curr.lottery());
