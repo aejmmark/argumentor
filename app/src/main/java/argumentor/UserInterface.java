@@ -106,6 +106,7 @@ public class UserInterface {
     * Sentence generation loop.
     */
     public void sentenceGeneration(final int listSize) {
+        System.out.println("chain length " + listSize + 1);
         System.out.println("enter desired amount of words");
         System.out.println("(0) generates random length");
         System.out.println("(exit) leaves the app");
