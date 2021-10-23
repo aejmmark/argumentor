@@ -75,7 +75,7 @@ public class Functions {
                 break;
             }
             if (wordList.size() == listSize) {
-                if (trie.checkPunctuation(wordList.get(wordList.size()-1))) {
+                if (trie.checkPunctuation(wordList.get(wordList.size() - 1))) {
                     wordList.clear();
                 } else {
                     wordList = trie.nodeSearch(wordList);
@@ -83,9 +83,11 @@ public class Functions {
             }
             if (wordList.size() < listSize) {
                 if (!wordList.isEmpty()) {
-                    currNode = currNode.getNode(wordList.get(wordList.size()-1));
-                    if (currNode.getTicketSum() == 0 
-                    || trie.checkPunctuation(wordList.get(wordList.size()-1))) {
+                    currNode = currNode.getNode(wordList.get(
+                    wordList.size() - 1));
+                    if (currNode.getTicketSum() == 0
+                    || trie.checkPunctuation(
+                    wordList.get(wordList.size() - 1))) {
                         wordList.clear();
                     }
                 }
@@ -94,7 +96,7 @@ public class Functions {
                 }
                 wordList.add(currNode.lottery());
             }
-            sentence = (sentence + " " + wordList.get(wordList.size()-1));
+            sentence = (sentence + " " + wordList.get(wordList.size() - 1));
             wordCount++;
         }
         return sentence;

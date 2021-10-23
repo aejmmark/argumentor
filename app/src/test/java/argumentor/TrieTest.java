@@ -10,7 +10,7 @@ import static org.junit.Assert.assertNotNull;
 public class TrieTest {
     private Trie trie;
     private ArrayList<String> list;
-    final int chainLength = 3;
+    private final int chainLength = 3;
 
     @Before
     public void setUp() {

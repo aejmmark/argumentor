@@ -64,7 +64,7 @@ public class Node {
     }
 
     /**
-    * Returns the Node associated wit the 
+    * Returns the Node associated wit the
     * given String key.
     * @param str String used as the key.
     * @return Node connected to this one.
@@ -101,13 +101,13 @@ public class Node {
     * Increases the freq variable by one.
     */
     public void incrementFreq() {
-        this.freq++;;
+        this.freq++;
     }
 
     /**
     * Increases the ticketSum variable by one.
     */
     public void incrementTicketSum() {
-        this.ticketSum++;;
+        this.ticketSum++;
     }
 }

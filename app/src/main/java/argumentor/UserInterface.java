@@ -25,8 +25,9 @@ public class UserInterface {
     * Maximum and minimum length for
     * markov chains.
     */
-    final int maxChain = 8;
-    final int minChain = 2;
+    private final int maxChain = 8;
+    private final int minChain = 2;
+    private final int[] testChains = {3, 5, 7};
 
     /**
     * Constructor.
@@ -59,19 +60,24 @@ public class UserInterface {
                 System.out.println("data file changed");
             }
             if (input.equals("2")) {
-                System.out.println("testing performance at chainlength 3");
-                performanceTest(3);
+                System.out.println("testing performance at chainlength "
+                + testChains[0]);
+                performanceTest(testChains[0]);
                 System.out.println("");
-                System.out.println("testing performance at chainlength 5");
-                performanceTest(5);
+                System.out.println("testing performance at chainlength "
+                + testChains[1]);
+                performanceTest(testChains[1]);
                 System.out.println("");
-                System.out.println("testing performance at chainlength 7");
-                performanceTest(7);
+                System.out.println("testing performance at chainlength "
+                + testChains[0]);
+                performanceTest(testChains[2]);
                 break;
             }
             if (input.equals("1")) {
-                System.out.println("enter desired chain length between 2 and 8");
-                while(true) {
+                System.out.println(
+                "enter desired chain length between "
+                + minChain + " and " + maxChain);
+                while (true) {
                     if (this.scn.hasNextInt()) {
                         int chainLength = this.scn.nextInt();
                         if (chainLength < minChain) {
@@ -80,12 +86,11 @@ public class UserInterface {
                         if (chainLength > maxChain) {
                             chainLength = maxChain;
                         }
-                        int listSize = chainLength-1;
+                        int listSize = chainLength - 1;
                         try {
                             this.func.processData(fileName, trie, chainLength);
                             sentenceGeneration(listSize);
                             return;
-                            
                         } catch (Exception e) {
                             System.out.println(e);
                             return;

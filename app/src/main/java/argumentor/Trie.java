@@ -55,8 +55,10 @@ public class Trie {
     /**
     * Builds a branch of the trie by using the given list of strings.
     * Creates new nodes if edges matching the given string are not present.
-    * Increments frequency and ticketSum if it encounters a previously created node.
-    * Stops the process and returns true if it encounters a sentence ending character.
+    * Increments frequency and ticketSum if it
+    * encounters a previously created node.
+    * Stops the process and returns true if it
+    * encounters a sentence ending character.
     * @param strings list used to build the branch.
     * @return false by default. true if encounters !/?/.
     */
@@ -69,7 +71,7 @@ public class Trie {
                 prev.addEdge(str, curr);
             } else {
                 curr.incrementFreq();
-                prev.incrementTicketSum();    
+                prev.incrementTicketSum();
             }
             if (checkPunctuation(str)) {
                 return true;

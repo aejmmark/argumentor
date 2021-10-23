@@ -11,9 +11,9 @@ import static org.junit.Assert.assertFalse;
 public class FunctionsTest {
     private Functions func;
     private Trie trie;
-    final int chainLength = 3;
-    final int sentenceLength = 3;
-    final int listSize = 2;
+    private final int chainLength = 3;
+    private final int sentenceLength = 3;
+    private final int listSize = 2;
 
     @Before
     public void setUp() {
@@ -63,8 +63,8 @@ public class FunctionsTest {
                     }
                 }
             }
-            if (sentence.charAt(sentence.length()-1) == '.') {
-                sentence = sentence.substring(0, sentence.length()-1);
+            if (sentence.charAt(sentence.length() - 1) == '.') {
+                sentence = sentence.substring(0, sentence.length() - 1);
             }
             if (data.contains(sentence)) {
                 contained = true;
@@ -85,7 +85,8 @@ public class FunctionsTest {
         } catch (Exception e) {
             System.out.println(e);
         }
-        String sentence = this.func.generate(this.sentenceLength, this.trie, this.listSize);
+        String sentence = this.func.generate(
+        this.sentenceLength, this.trie, this.listSize);
         String[] words = sentence.split(" ");
         assertTrue("Amount of words should be 3",
         words.length == length);
