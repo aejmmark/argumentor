@@ -25,8 +25,8 @@ public class UserInterface {
     * Maximum and minimum length for
     * markov chains.
     */
-    final int maxChain = 7;
-    final int minChain = 1;
+    final int maxChain = 8;
+    final int minChain = 2;
 
     /**
     * Constructor.
@@ -59,12 +59,18 @@ public class UserInterface {
                 System.out.println("data file changed");
             }
             if (input.equals("2")) {
-                System.out.println("testing performance");
-                //performanceTest();
+                System.out.println("testing performance at chainlength 3");
+                performanceTest(3);
+                System.out.println("");
+                System.out.println("testing performance at chainlength 5");
+                performanceTest(5);
+                System.out.println("");
+                System.out.println("testing performance at chainlength 7");
+                performanceTest(7);
                 break;
             }
             if (input.equals("1")) {
-                System.out.println("enter desired chain length between 1 and 7");
+                System.out.println("enter desired chain length between 2 and 8");
                 while(true) {
                     if (this.scn.hasNextInt()) {
                         int chainLength = this.scn.nextInt();
@@ -82,6 +88,11 @@ public class UserInterface {
                             
                         } catch (Exception e) {
                             System.out.println(e);
+                            return;
+                        }
+                    } else {
+                        input = this.scn.nextLine();
+                        if (input.equals("exit")) {
                             return;
                         }
                     }
@@ -115,39 +126,40 @@ public class UserInterface {
     /**
     * Runs performance tests for the main functions.
     * Completes each one 500 times and chooses the median value.
-    * @param alt determines wich version of the tree is used for tests.
+    * @param chainLength determines size of the markov chains.
     */
-    //public void performanceTest(final boolean alt) {
-    //    long startTime;
-    //    final int tests = 500;
-    //    final int[] sentenceLength = {10, 100, 1000, 10000};
-    //    final double timeConverter = 1000000000.0;
-    //    ArrayList<Double> results = new ArrayList<>();
-    //    try {
-    //        for (int i = 0; i < tests; i++) {
-    //            this.tree = new Tree();
-    //            startTime = System.nanoTime();
-    //            this.func.processData(alt, "data.txt", this.tree);
-    //            results.add((System.nanoTime() - startTime) / timeConverter);
-    //        }
-    //    } catch (Exception e) {
-    //        System.out.println("unexpected error");
-    //    }
-    //    Collections.sort(results);
-    //    System.out.println("file processing took "
-    //    + results.get(tests / 2) + " seconds");
-//
-    //    for (int i = 0; i < sentenceLength.length; i++) {
-    //        results = new ArrayList<>();
-    //        for (int j = 0; j < tests; j++) {
-    //            startTime = System.nanoTime();
-    //            this.func.generate(sentenceLength[i], this.tree);
-    //            results.add((System.nanoTime() - startTime) / timeConverter);
-    //        }
-    //        Collections.sort(results);
-    //        System.out.println("generating " + sentenceLength[i]
-    //        + " word sentence took "
-    //        + results.get(tests / 2) + " seconds");
-    //    }
-    //}
+    public void performanceTest(final int chainLength) {
+        long startTime;
+        int listSize = chainLength - 1;
+        final int tests = 500;
+        final int[] sentenceLength = {10, 100, 1000, 10000};
+        final double timeConverter = 1000000000.0;
+        ArrayList<Double> results = new ArrayList<>();
+        try {
+            for (int i = 0; i < tests; i++) {
+                this.trie = new Trie();
+                startTime = System.nanoTime();
+                this.func.processData("data.txt", this.trie, chainLength);
+                results.add((System.nanoTime() - startTime) / timeConverter);
+            }
+        } catch (Exception e) {
+            System.out.println("unexpected error");
+        }
+        Collections.sort(results);
+        System.out.println("file processing took "
+        + results.get(tests / 2) + " seconds");
+
+        for (int i = 0; i < sentenceLength.length; i++) {
+            results = new ArrayList<>();
+            for (int j = 0; j < tests; j++) {
+                startTime = System.nanoTime();
+                this.func.generate(sentenceLength[i], this.trie, listSize);
+                results.add((System.nanoTime() - startTime) / timeConverter);
+            }
+            Collections.sort(results);
+            System.out.println("generating " + sentenceLength[i]
+            + " word sentence took "
+            + results.get(tests / 2) + " seconds");
+        }
+    }
 }
