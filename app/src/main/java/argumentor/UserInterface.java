@@ -60,16 +60,16 @@ public class UserInterface {
                 System.out.println("data file changed");
             }
             if (input.equals("2")) {
-                System.out.println("testing performance at chainlength "
+                System.out.println("testing performance at chain length "
                 + testChains[0]);
                 performanceTest(testChains[0]);
                 System.out.println("");
-                System.out.println("testing performance at chainlength "
+                System.out.println("testing performance at chain length "
                 + testChains[1]);
                 performanceTest(testChains[1]);
                 System.out.println("");
-                System.out.println("testing performance at chainlength "
-                + testChains[0]);
+                System.out.println("testing performance at chain length "
+                + testChains[2]);
                 performanceTest(testChains[2]);
                 break;
             }
