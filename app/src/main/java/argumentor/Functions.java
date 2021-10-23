@@ -12,7 +12,16 @@ import java.io.FileNotFoundException;
 public class Functions {
 
     /**
-    * 
+    * Reads through the given txt file and adds all the words to the
+    * trie in a list determined by the parameter chainLength.
+    * Clears the list if addNodes returns false meaning that a
+    * sentence ending character has been encountered.
+    * Sets all characters to lowercase and only allows words that pass
+    * the matchesChars() check.
+    * @param fileName String representing the name of the data file.
+    * @param trie The trie that all the new branches are added to.
+    * @param chainLength int representing the depth of the trie and
+    * the size of the list used.
     */
     public void processData(final String fileName, final Trie trie,
     final int chainLength) throws FileNotFoundException {
@@ -40,6 +49,19 @@ public class Functions {
         scn.close();
     }
 
+    /**
+    * Generates a sentence from words in the given trie.
+    * Uses checkGenerationEnd() to determine when to stop.
+    * Uses the wordList is below listSize it adds words by
+    * using lottery() directly. Returns to root if the listis empty.
+    * Otherwise it uses nodeSearch().
+    * Clears the list if checkPunctuation returns true.
+    * @param length Length of generated sentence.
+    * 0 returns random length.
+    * @param trie Trie containing all the strings.
+    * @param listSize Size of the list used for generation.
+    * @return String representing the generated sentence.
+    */
     public String generate(final int length,
     final Trie trie, final int listSize) {
         Node currNode = trie.getRoot();
@@ -49,11 +71,11 @@ public class Functions {
         int wordCount = 0;
         while (true) {
             if (checkGenerationEnd(maxWords, wordCount)) {
-                sentence = checkPunctuation(sentence);
+                sentence = addPunctuation(sentence);
                 break;
             }
             if (wordList.size() == listSize) {
-                if (trie.checkSentenceEnd(wordList.get(wordList.size()-1))) {
+                if (trie.checkPunctuation(wordList.get(wordList.size()-1))) {
                     wordList.clear();
                 } else {
                     wordList = trie.nodeSearch(wordList);
@@ -63,7 +85,7 @@ public class Functions {
                 if (!wordList.isEmpty()) {
                     currNode = currNode.getNode(wordList.get(wordList.size()-1));
                     if (currNode.getTicketSum() == 0 
-                    || trie.checkSentenceEnd(wordList.get(wordList.size()-1))) {
+                    || trie.checkPunctuation(wordList.get(wordList.size()-1))) {
                         wordList.clear();
                     }
                 }
@@ -78,13 +100,10 @@ public class Functions {
         return sentence;
     }
 
-    //sentence = sentence.substring(0, 1).toUpperCase()    yeah this should probably be after all puncs
-    //+ sentence.substring(1).toLowerCase();
-
     /**
     * Checks whether or not the sentence should end
     * based on the amount of words it currently has.
-    * @param maxWords maximum length of entence determined by user.
+    * @param maxWords maximum length of sentence determined by user.
     * 0 leads to a randomized solution.
     * @param wordCount int representing the amount of words
     currently in the sentence.
@@ -110,7 +129,7 @@ public class Functions {
     * @param str sentence to be checked.
     * @return The complete sentence.
     */
-    public String checkPunctuation(final String str) {
+    public String addPunctuation(final String str) {
         String sentence = str;
         char end = sentence.charAt(sentence.length() - 1);
         if (!(end == '.' || end == '?' || end == '!')) {
@@ -122,6 +141,11 @@ public class Functions {
         return sentence;
     }
 
+    /**
+    * Checks if the given string matches the allowed characters.
+    * @param str String to be checked.
+    * @return true if matches, false if not.
+    */
     public boolean matchesChars(final String str) {
         if (str.matches("[-,.?!'äöa-z]+")
             && !(str.equals(".") || str.equals("?")

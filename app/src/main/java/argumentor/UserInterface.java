@@ -104,6 +104,7 @@ public class UserInterface {
 
     /**
     * Sentence generation loop.
+    * @param listSize used by generate().
     */
     public void sentenceGeneration(final int listSize) {
         System.out.println("chain length " + listSize + 1);
