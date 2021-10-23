@@ -96,26 +96,26 @@ public class TrieTest {
     }
 
     @Test
-    public void testCheckSentenceEndReturnsTrueWhenDotPresent() {
+    public void testCheckPunctuationReturnsTrueWhenDotPresent() {
         assertTrue("Should return True",
-        this.trie.checkSentenceEnd("str."));
+        this.trie.checkPunctuation("str."));
     }
 
     @Test
-    public void testCheckSentenceEndReturnsTrueWhenXmarkPresent() {
+    public void testCheckPunctuationReturnsTrueWhenXmarkPresent() {
         assertTrue("Should return True",
-        this.trie.checkSentenceEnd("str!"));
+        this.trie.checkPunctuation("str!"));
     }
 
     @Test
-    public void testCheckSentenceEndReturnsTrueWhenQuestionmarkPresent() {
+    public void testCheckPunctuationReturnsTrueWhenQuestionmarkPresent() {
         assertTrue("Should return True",
-        this.trie.checkSentenceEnd("str?"));
+        this.trie.checkPunctuation("str?"));
     }
 
     @Test
-    public void testCheckSentenceEndReturnsFalseWhenNoDotPresent() {
+    public void testCheckPunctuationReturnsFalseWhenNoDotPresent() {
         assertFalse("Should return False",
-        this.trie.checkSentenceEnd("str"));
+        this.trie.checkPunctuation("str"));
     }
 }

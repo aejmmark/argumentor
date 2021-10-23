@@ -65,13 +65,13 @@ public class NodeTest {
     }
 
     @Test
-    public void testCheckWinnerReturnsWinningString() {
+    public void testLotteryReturnsWinningString() {
         Node testNodeThree = new Node();
         testNode.addEdge("two", testNodeTwo);
         testNode.addEdge("three", testNodeThree);
         assertTrue("Should return two or three",
-        testNode.checkWinner(0).equals("two")
-        || testNode.checkWinner(0).equals("three"));
+        testNode.lottery().equals("two")
+        || testNode.lottery().equals("three"));
     }
 
     @Test

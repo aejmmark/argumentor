@@ -108,38 +108,38 @@ public class FunctionsTest {
     }
 
     @Test
-    public void testCheckPunctuationDeletesComma() {
+    public void testAddPunctuationDeletesComma() {
         String str = "test,";
         assertTrue("Length should be equal",
-        str.length() == this.func.checkPunctuation(str).length());
+        str.length() == this.func.addPunctuation(str).length());
     }
 
     @Test
-    public void testCheckPunctuationAddsDot() {
+    public void testAddPunctuationAddsDot() {
         String str = "test";
         assertTrue("Length should be greater",
-        str.length() < this.func.checkPunctuation(str).length());
+        str.length() < this.func.addPunctuation(str).length());
     }
 
     @Test
-    public void testCheckPunctuationIgnoresDot() {
+    public void testAddPunctuationIgnoresDot() {
         String str = "test.";
         assertTrue("Strings should be equal",
-        str.equals(this.func.checkPunctuation(str)));
+        str.equals(this.func.addPunctuation(str)));
     }
 
     @Test
-    public void testCheckPunctuationIgnoresQmark() {
+    public void testAddPunctuationIgnoresQmark() {
         String str = "test?";
         assertTrue("Strings should be equal",
-        str.equals(this.func.checkPunctuation(str)));
+        str.equals(this.func.addPunctuation(str)));
     }
 
     @Test
-    public void testCheckPunctuationIgnoresExmark() {
+    public void testAddPunctuationIgnoresExmark() {
         String str = "test!";
         assertTrue("Strings should be equal",
-        str.equals(this.func.checkPunctuation(str)));
+        str.equals(this.func.addPunctuation(str)));
     }
 
     @Test
