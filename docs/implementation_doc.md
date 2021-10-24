@@ -20,18 +20,14 @@ After that the function returns the string containing all the collected words.
 
 Data processing
 * Time: N loops consisting of 2 - 8 hashmap operations.
-
 Complexity: O(N)
 * Space: Up to N nodes each with their own size M hashmaps.
-
 Complexity: O(NM)
 
 Sentence generation
 * Time: N loops consisting of 1 - 7 hashmaps operations and looping through a size M hashmap.
-
 Complexity: O(NM)
 * Space: Uses a list of size 1 - 7.
-
 Complexity: O(1)
 
 Note that the maximum chain length 8 was chosen arbitrarily and could be increased to any number. Doing so would only affect the results to a certain point as sentences naturally tend to be below a certain length.
