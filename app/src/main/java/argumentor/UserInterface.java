@@ -132,13 +132,13 @@ public class UserInterface {
 
     /**
     * Runs performance tests for the main functions.
-    * Completes each one 500 times and chooses the median value.
+    * Completes each one 100 times and chooses the median value.
     * @param chainLength determines size of the markov chains.
     */
     public void performanceTest(final int chainLength) {
         long startTime;
         int listSize = chainLength - 1;
-        final int tests = 500;
+        final int tests = 100;
         final int[] sentenceLength = {10, 100, 1000, 10000};
         final double timeConverter = 1000000000.0;
         ArrayList<Double> results = new ArrayList<>();
