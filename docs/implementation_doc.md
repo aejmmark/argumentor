@@ -3,50 +3,35 @@
 Argumentor is a simple random sentence generator that reads text files and uses the data to build a trie structure that can then be utilized to generate sentences.
 The main parts of the app are the processdata and generate functions.
 
-The processdata function reads the text file given as an parameter and builds a trie from the separate words. Currently there are two different versions determined by the parameter boolean alt.
-The default version builds a trie with only one node for each word and a hashmap containing every node to help keep track. This version is slower but it allows for significantly more random word combinations even with smaller source material. The alternative version builds a more standard trie with several nodes containing the same word scattered throughout the tree. This version is faster but the generated sentences are copies of those found in the default source material meaning that a very large dataset would be required.
-The nodes in the trie contain hashmaps with node-int pairings representing edges. The int values represent the amount of tickets the node has that is then used to calculate the weight of the edge. The function starts from the root and adds new nodes to the previous node's hashmap. Every time it comes across a punctuation mark it resets the previous node back to being the root.
-
-
-Graphs showing how the two versions react to the input "beans are awesome. I enjoy beans immensely. beans are horrible.":
+The processdata function reads the chosen text file and builds a trie from the separate words based on the "chain" length given as an input. The function maintains a list that contains the previous words of the source data. At every loop it adds a new word and removes the oldest if the list is at chain length. Then it builds a trie branch with the addNodes function using the words on the list. Previously encountered nodes have their frequency value increased. Once the function runs into an sentence ending character (./!/?) it clears the list and starts building it up again.
 
 ------------------------------------------------------------------------------------
 
-Default
+Demonstration of how the trie is built:
 
-![](/docs/images/default.png)
-
-------------------------------------------------------------------------------------
-
-Alternative
-
-![](/docs/images/alt.png)
+![](/docs/images/trie.png)
 
 ------------------------------------------------------------------------------------
 
-The generate functions starts from the root and chooses the next node by utilizing the root node's lottery method. It chooses a random number between 0 and the ticketSum variable and chooses the matching node by going through the edges hashmap. The winning node is then placed as the previous node and the loop continues until the sentence stops randomly or the given maximum word count is reached. After that the function returns the string containing all the words collected from the nodes.
+The generate function maintains a list of the size chain length - 1. The function starts from the root and chooses the next word by utilizing the node's lottery function. This chooses a random number between 0 and the ticketSum variable and chooses the matching word by going through the edges hashmap and reducing the generated number with the nodes frequency values. The winning word is then added to the list and used to determine the next node. Once the list is full it begins to search for a matching node by using the nodeSearch function. This starts from the root and compares the words on the list to the edges of the current node. It repeats this until it reaches the last node of the branch and then determines next word using the lottery function. If the generator runs in to an incomplete branch or a node that has a sentence ending word as its key it clears the list. This whole process is repeated until the the given maximum word count is reached or sentence randomly stops if the chosen word count is 0.
+After that the function returns the string containing all the collected words.
 
 ### Time and space complexities
 
-Default data processing
-* Time: n loops consisting of two hashmap operations
-complexity: O(n)
-* Space: size n hashmap and up to n nodes each with their own hashmaps
-complexity: O(nm)
-
-Alternatve data processing
-* Time: n loops with a single hashmap operation
-complexity: O(n)
-* Space: n nodes each with their own hashmaps
-complexity: O(nm)
+Data processing
+* Time: N loops consisting of 2 - 8 hashmap operations.
+Complexity: O(N)
+* Space: Up to N nodes each with their own size M hashmaps
+Complexity: O(NM)
 
 Sentence generation
-* Time: n loops that loop through node hashmaps.
-Note that the hashmaps are smaller in the alternative version.
-complexity: O(nm)
-* Space: only uses a predetermined set of variables
-complexity: O(1)
+* Time: N loops consisting of 1 - 7 hashmaps operations and looping through a size M hashmap.
+Complexity: O(NM)
+* Space: Uses a list of size 1 - 7.
+Complexity: O(1)
+
+Note that the maximum chain length 8 was chosen arbitrarily and could be increased to any number. Doing so would only affect the results to a certain point as sentences naturally tend to be below a certain length.
 
 ### Issues and possible improvements
 
-Default version runs into issues if sentences containing the same word twice are present in the source data. In these cases the generator may end up looping through the same sentence indefinitely. This is only notable on very large sentence length requests so for now it mainly affects performance testing.
+The data processing does not differentiate between sentence ending dots and ones in the middle of sentences such as in the case of mr. or dr.
