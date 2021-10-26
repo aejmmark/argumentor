@@ -110,7 +110,7 @@ public class Functions {
     * @return true if the sentence will end, false if not
     */
     public boolean checkGenerationEnd(final int maxWords, final int wordCount) {
-        if (maxWords == 0) {
+        if (maxWords == 0 && wordCount > 0) {
             Random rng = new Random();
             final int chance = 10;
             int count = rng.nextInt(chance);
