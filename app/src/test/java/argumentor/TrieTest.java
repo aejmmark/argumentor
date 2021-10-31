@@ -81,7 +81,9 @@ public class TrieTest {
     public void testNodeSearchReturnsEqualSizeList() {
         Functions func = new Functions();
         try {
-            func.processData("data.txt", this.trie, chainLength);
+            String path = System.getProperty("user.dir")
+            + "/data.txt";
+            func.processData(path, this.trie, chainLength);
         } catch (Exception e) {
             System.out.println(e);
         }

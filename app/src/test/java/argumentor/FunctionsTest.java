@@ -14,17 +14,20 @@ public class FunctionsTest {
     private final int chainLength = 3;
     private final int sentenceLength = 3;
     private final int listSize = 2;
+    private String path;
 
     @Before
     public void setUp() {
         this.func = new Functions();
         this.trie = new Trie();
+        this.path = System.getProperty("user.dir")
+        + "/data.txt";
     }
 
     @Test
     public void testProcessDataAddsNodesToRoot() {
         try {
-            this.func.processData("data.txt", this.trie, this.chainLength);
+            this.func.processData(this.path, this.trie, this.chainLength);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -35,7 +38,7 @@ public class FunctionsTest {
     @Test
     public void testGenerateReturnSentence() {
         try {
-            this.func.processData("data.txt", this.trie, this.chainLength);
+            this.func.processData(this.path, this.trie, this.chainLength);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -47,11 +50,10 @@ public class FunctionsTest {
     public void testGeneratedSentenceFoundInData() {
         boolean contained = false;
         try {
-            this.func.processData("data.txt", this.trie, this.chainLength);
+            this.func.processData(this.path, this.trie, this.chainLength);
             String sentence = this.func.generate(
             this.sentenceLength, this.trie, this.listSize);
-            File file = new File(System.getProperty("user.dir")
-            + "/data.txt");
+            File file = new File(this.path);
             Scanner scn = new Scanner(file);
             String data = "";
             while (scn.hasNextLine()) {
@@ -81,7 +83,7 @@ public class FunctionsTest {
     public void testGeneratedSentenceMatchGivenLength() {
         final int length = this.sentenceLength + 1;
         try {
-            this.func.processData("data.txt", this.trie, this.chainLength);
+            this.func.processData(this.path, this.trie, this.chainLength);
         } catch (Exception e) {
             System.out.println(e);
         }
