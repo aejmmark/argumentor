@@ -10,6 +10,6 @@ The app can be built with:
 
 The app can be run with:
 
-    java -jar app/build/libs/app.jar
+    java -jar ./app/build/libs/app.jar
 
 Txt files must be in the app directory.
