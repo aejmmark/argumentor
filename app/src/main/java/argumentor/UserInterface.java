@@ -42,7 +42,7 @@ public class UserInterface {
     * Main interface that opens when the app is run.
     */
     public void mainMenu() {
-        String fileName = "data.txt";
+        String path = createPath("data.txt");
         String input;
         System.out.println("greetings!");
         System.out.println("(1) sentence generation");
@@ -56,7 +56,8 @@ public class UserInterface {
             }
             if (input.equals("3")) {
                 System.out.println("enter name of txt file in app directory");
-                fileName = this.scn.nextLine();
+                String fileName = this.scn.nextLine();
+                path = createPath(fileName);
                 System.out.println("data file changed");
             }
             if (input.equals("2")) {
@@ -88,7 +89,7 @@ public class UserInterface {
                         }
                         int listSize = chainLength - 1;
                         try {
-                            this.func.processData(fileName, trie, chainLength);
+                            this.func.processData(path, trie, chainLength);
                             sentenceGeneration(listSize);
                             return;
                         } catch (Exception e) {
@@ -128,6 +129,20 @@ public class UserInterface {
                 }
             }
         }
+    }
+
+    /**
+    * Creates a path to the file.
+    * @param fileName String representing the name of the txt file.
+    * @return complete path.
+    */
+    public String createPath(final String fileName) {
+        final int pathIndex = 18;
+        String path = App.class.getProtectionDomain()
+        .getCodeSource().getLocation().getPath();
+        path = path.substring(0, path.length() - pathIndex)
+        + fileName;
+        return path;
     }
 
     /**

@@ -18,15 +18,14 @@ public class Functions {
     * sentence ending character has been encountered.
     * Sets all characters to lowercase and only allows words that pass
     * the matchesChars() check.
-    * @param fileName String representing the name of the data file.
+    * @param path String representing the path to the the data file.
     * @param trie The trie that all the new branches are added to.
     * @param chainLength int representing the depth of the trie and
     * the size of the list used.
     */
-    public void processData(final String fileName, final Trie trie,
+    public void processData(final String path, final Trie trie,
     final int chainLength) throws FileNotFoundException {
-        File file = new File(System.getProperty("user.dir")
-        + "/" + fileName);
+        File file = new File(path);
         Scanner scn = new Scanner(file);
         ArrayList<String> wordList = new ArrayList<>();
         while (scn.hasNextLine()) {
