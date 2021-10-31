@@ -10,7 +10,6 @@ The app can be built with:
 
 The app can be run with:
 
-    java -jar /build/lips/app.jar
+    java -jar app/build/libs/app.jar
 
-Currently only works when in the argumentor/app directory.
-Txt files must also be in this directory.
+Txt files must be in the app directory.
